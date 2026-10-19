@@ -26,7 +26,6 @@ export function computeMetrics(fields: ResultField[], set: CitationSet | null, r
   let cited = 0;
   let searchedEmpty = 0;
   let total = 0;
-  const byStatus = { proposed: 0, accepted: 0, rejected: 0 };
   let invalid = 0;
   let warned = 0;
   let orphan = 0;
@@ -37,7 +36,6 @@ export function computeMetrics(fields: ResultField[], set: CitationSet | null, r
       else if (leafSet.has(ptr)) cited++;
       for (const c of list) {
         total++;
-        byStatus[c.status] = (byStatus[c.status] ?? 0) + 1;
         const r = reports[c.id];
         if (r?.worst === "error") invalid++;
         else if (r?.worst === "warn") warned++;
@@ -51,11 +49,9 @@ export function computeMetrics(fields: ResultField[], set: CitationSet | null, r
     coverage: leaves.length ? cited / leaves.length : 0,
     searchedEmpty,
     total,
-    byStatus,
     invalid: invalid + [...schemaErrorCitations].filter((id) => !reports[id as string] || reports[id as string].worst !== "error").length,
     warned,
     orphan,
-    reviewed: byStatus.accepted + byStatus.rejected,
   };
 }
 
@@ -93,9 +89,6 @@ export function Header(p: Props) {
       <div className="metrics">
         <Metric label="coverage" value={`${Math.round(m.coverage * 100)}%`} hint={`${m.cited} of ${m.leaves} leaf fields have ≥1 citation`} />
         <Metric label="citations" value={m.total} hint={`${m.searchedEmpty} field${m.searchedEmpty === 1 ? "" : "s"} recorded as searched-nothing-found`} />
-        <Metric label="accepted" value={m.byStatus.accepted} tone="ok" />
-        <Metric label="rejected" value={m.byStatus.rejected} tone="bad" />
-        <Metric label="proposed" value={m.byStatus.proposed} tone="pending" />
         <Metric label="invalid" value={p.validating ? "…" : m.invalid} tone={m.invalid ? "bad" : undefined} hint="schema errors or anchors that fail to resolve" />
         <Metric label="warnings" value={p.validating ? "…" : m.warned} tone={m.warned ? "warn" : undefined} hint="anchors that match only after normalization, or quotes that need a human eye" />
         {m.orphan > 0 && <Metric label="orphan ptrs" value={m.orphan} tone="bad" hint="pointers in citations.json that do not exist in result.json" />}

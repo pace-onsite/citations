@@ -12,7 +12,7 @@ interface Props {
   onSelect: (pointer: string) => void;
 }
 
-type Filter = "all" | "cited" | "uncited" | "needs-review" | "problems";
+type Filter = "all" | "cited" | "uncited" | "problems";
 
 export function FieldList({ fields, set, reports, selectedPointer, onSelect }: Props) {
   const [filter, setFilter] = useState<Filter>("all");
@@ -28,7 +28,6 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
       if (!isLeaf(f)) return false;
       if (filter === "cited") return list.length > 0;
       if (filter === "uncited") return list.length === 0;
-      if (filter === "needs-review") return list.some((c) => c.status === "proposed");
       if (filter === "problems") return list.some((c) => reports[c.id]?.worst === "error" || reports[c.id]?.worst === "warn");
       return true;
     });
@@ -55,7 +54,6 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
           <option value="all">all</option>
           <option value="cited">cited</option>
           <option value="uncited">uncited</option>
-          <option value="needs-review">needs review</option>
           <option value="problems">problems</option>
         </select>
       </div>
@@ -65,8 +63,6 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
           const leaf = isLeaf(f);
           const levels = (list ?? []).map((c) => reports[c.id]?.worst ?? "info");
           const worst: Level | null = list && list.length ? worstOf(levels) : null;
-          const counts = { accepted: 0, rejected: 0, proposed: 0 };
-          for (const c of list ?? []) counts[c.status]++;
           const name = f.pointer.split("/").pop() ?? f.pointer;
           return (
             <button
@@ -85,9 +81,7 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
               {leaf && (
                 <span className="badges">
                   {list !== undefined && list.length === 0 && <span className="pill none" title="searched, nothing found">∅</span>}
-                  {counts.accepted > 0 && <span className="pill ok">{counts.accepted}</span>}
-                  {counts.proposed > 0 && <span className="pill pending">{counts.proposed}</span>}
-                  {counts.rejected > 0 && <span className="pill bad">{counts.rejected}</span>}
+                  {list && list.length > 0 && <span className="pill pending">{list.length}</span>}
                   {worst && worst !== "ok" && worst !== "info" && <span className={`dot ${worst}`} title={`validation: ${worst}`} />}
                 </span>
               )}
@@ -109,7 +103,7 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
         )}
       </div>
       <div className="pane-foot hint">
-        <kbd>j</kbd>/<kbd>k</kbd> move · <kbd>a</kbd> accept · <kbd>r</kbd> reject · <kbd>u</kbd> un-review
+        <kbd>j</kbd>/<kbd>k</kbd> move
       </div>
     </section>
   );

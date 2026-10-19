@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { formatValue } from "../lib/pointer";
 import type { CitationReport, Finding, SchemaError } from "../lib/validate";
-import type { Anchor, Citation, CitationSet, ResultField, Status } from "../types";
+import type { Anchor, Citation, CitationSet, ResultField } from "../types";
 
 interface Props {
   fields: ResultField[];
@@ -12,7 +12,6 @@ interface Props {
   reports: Record<string, CitationReport>;
   schemaErrors: SchemaError[];
   onSelectCitation: (pointer: string, citation: Citation, anchorIndex?: number) => void;
-  onStatus: (pointer: string, id: string, status: Status) => void;
   onNote: (pointer: string, id: string, note: string) => void;
 }
 
@@ -85,7 +84,6 @@ export function CitationPanel(p: Props) {
           report={p.reports[c.id]}
           schemaErrors={p.schemaErrors.filter((e) => e.citationId === c.id)}
           onSelect={(ai) => p.onSelectCitation(p.pointer!, c, ai)}
-          onStatus={(s) => p.onStatus(p.pointer!, c.id, s)}
           onNote={(n) => p.onNote(p.pointer!, c.id, n)}
         />
       ))}
@@ -102,7 +100,6 @@ function CitationCard(props: {
   report?: CitationReport;
   schemaErrors: SchemaError[];
   onSelect: (anchorIndex?: number) => void;
-  onStatus: (s: Status) => void;
   onNote: (n: string) => void;
 }) {
   const { citation: c, report, selected } = props;
@@ -113,11 +110,10 @@ function CitationCard(props: {
   return (
     <article
       data-cid={c.id}
-      className={`card status-${c.status} ${selected ? "selected" : ""} worst-${worst}`}
+      className={`card ${selected ? "selected" : ""} worst-${worst}`}
       onClick={() => !selected && props.onSelect(0)}
     >
       <header className="card-head">
-        <span className={`status ${c.status}`}>{c.status}</span>
         <span className="cid">{c.id}</span>
         <span className="meta">
           {c.source}
@@ -203,19 +199,6 @@ function CitationCard(props: {
         </div>
       )}
 
-      <footer className="card-actions" onClick={(e) => e.stopPropagation()}>
-        <button className={`accept ${c.status === "accepted" ? "on" : ""}`} onClick={() => props.onStatus("accepted")}>
-          Accept
-        </button>
-        <button className={`reject ${c.status === "rejected" ? "on" : ""}`} onClick={() => props.onStatus("rejected")}>
-          Reject
-        </button>
-        {c.status !== "proposed" && (
-          <button className="ghost" onClick={() => props.onStatus("proposed")}>
-            Un-review
-          </button>
-        )}
-      </footer>
     </article>
   );
 }

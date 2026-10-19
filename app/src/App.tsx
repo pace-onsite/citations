@@ -7,7 +7,7 @@ import { JsonView } from "./components/JsonView";
 import { SourceViewer } from "./components/SourceViewer";
 import { flattenResult, isLeaf } from "./lib/pointer";
 import { compileSchema, validateCitation, validateSchema, type CitationReport, type SchemaError } from "./lib/validate";
-import type { Anchor, CaseDetail, CaseSummary, Citation, CitationSet, CitationsResponse, Status } from "./types";
+import type { Anchor, CaseDetail, CaseSummary, Citation, CitationSet, CitationsResponse } from "./types";
 
 export type RightTab = "review" | "json";
 
@@ -135,11 +135,6 @@ export function App() {
     setDirty(true);
   }, []);
 
-  const setStatus = useCallback(
-    (pointer: string, id: string, status: Status) => updateCitation(pointer, id, { status }),
-    [updateCitation],
-  );
-
   const save = useCallback(async () => {
     if (!caseId || !set) return;
     setSaving(true);
@@ -194,7 +189,7 @@ export function App() {
   }, []);
   const setPage = useCallback((page: number) => setSel((s) => ({ ...s, page })), []);
 
-  // keyboard: a = accept, r = reject, u = unreview, j/k = next/prev field
+  // keyboard: j/k = next/prev field
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement | null;
@@ -208,16 +203,10 @@ export function App() {
         e.preventDefault();
         return;
       }
-      if (!sel.citationId) return;
-      const status: Status | null = e.key === "a" ? "accepted" : e.key === "r" ? "rejected" : e.key === "u" ? "proposed" : null;
-      if (status) {
-        setStatus(sel.pointer, sel.citationId, status);
-        e.preventDefault();
-      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [fields, sel, set, selectField, setStatus]);
+  }, [fields, sel, set, selectField]);
 
   const selectedCitation: Citation | null = useMemo(() => {
     if (!set || !sel.pointer || !sel.citationId) return null;
@@ -288,7 +277,6 @@ export function App() {
                 reports={reports}
                 schemaErrors={schemaErrors}
                 onSelectCitation={selectCitation}
-                onStatus={setStatus}
                 onNote={(ptr, id, note) => updateCitation(ptr, id, { note })}
               />
             ) : (
