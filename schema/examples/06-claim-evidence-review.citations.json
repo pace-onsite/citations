@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "citations/v1",
+  "caseId": "06-claim-evidence-review",
+  "generatedAt": "2026-10-19T14:45:00Z",
+  "citations": {
+    "/reasoning": [
+      {
+        "id": "c-reasoning-1",
+        "status": "proposed",
+        "source": "auto",
+        "method": "cell-exact-match",
+        "confidence": 0.98,
+        "quote": "Major grammar and clarity issues are present in the Narrative document:\n\n- Duplicate text: The RYZE contact information is listed twice consecutively at the very beginning.\n- Extraneous text in address: “Location: 536 E Portland Ave NA Fresno, CA 93720” contains an unnecessary “NA” inserted into the street line.\n- Date formatting error: In ORIGIN OF LOSS, the date appears as “4-13- 26” with an extra space splitting the year.\n- Missing preposition: “This laminate floor is continuous the piano room, living room, kitchen and dining room/nook.” The phrase needs a preposition (e.g., “continuous through the piano room, living room, kitchen, and dining room/nook”).\n- Missing verb: “Cause of this loss a slab leak; wear and tear to the pipe in the slab with ensuing water damage.” The sentence is missing “is” after “Cause of this loss.”\n- Nonstandard/incorrect notation: “No subrogation the plumbing is 20++ yrs old.” The “20++” construction is incorrect; use “over 20 years old” or “20+ years old.”\n- Improper noun use: “Estimate completed with a possible reopen, should mitigation remove more than what is itemized...” The noun form should be “reopening,” or rephrase to “may reopen.”\n- Template instruction left in body: “Explanation: (If you choose No, please provide reason(s) of why home is not habitable during the repair process)” remains in the document and is not completed; it also reads awkwardly (“reason(s) of why home” should be “reasons why the home…”).\n\nGiven these issues, the narrative does not meet the standard for major grammar/spelling correctness.",
+        "note": "CSV has no sheets, so `sheet` is omitted.",
+        "createdAt": "2026-10-19T14:45:00Z",
+        "anchors": [
+          {
+            "kind": "sheet-range",
+            "file": "document-10.csv",
+            "range": "C3"
+          }
+        ]
+      }
+    ],
+    "/result": [
+      {
+        "id": "c-result-1",
+        "status": "rejected",
+        "source": "auto",
+        "method": "cell-exact-match",
+        "confidence": 0.2,
+        "quote": "Failed",
+        "note": "REJECTED: the row whose reasoning matches /reasoning says 'Failed', but result.json says 'Not Applicable'. Kept so the reviewer sees the contradiction and it counts toward the invalid-citation metric. Same cell expressed as a sheet-range and as a raw text span.",
+        "createdAt": "2026-10-19T14:45:00Z",
+        "anchors": [
+          {
+            "kind": "sheet-range",
+            "file": "document-10.csv",
+            "range": "B3"
+          },
+          {
+            "kind": "text-span",
+            "file": "document-10.csv",
+            "start": 778,
+            "end": 784
+          }
+        ]
+      }
+    ]
+  }
+}

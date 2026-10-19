@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# Vite / TypeScript output
+dist/
+dist-ssr/
+*.local
+*.tsbuildinfo
+.vite/
+
+# Secrets and logs
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+
+# Fixture selection metadata with internal org, task, and run IDs
+.internal/
+
+# Local review fixtures. Several files exceed GitHub's size limit.
+test-cases/

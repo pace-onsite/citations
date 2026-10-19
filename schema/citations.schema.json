@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://citations.local/schema/citations/v1",
+  "title": "CitationSet",
+  "description": "Field-level citations for one test case. Keys of `citations` are RFC 6901 JSON Pointers into result.json (e.g. `/policy_number`, `/coverage_list/0/coverage_insurance`). Each citation carries one or more `anchors`; an anchor is a renderable location in a source file. The UI draws every anchor of a citation as a yellow highlight.\n\nCOORDINATE CONTRACT for `page-region` anchors (the bounding-box case):\n- `page` is 1-indexed and matches both the PDF page order and `ocr.words[].bbox.page` in the *-ocr.json artifacts. Do NOT use `original_page` from the OCR files; it is unreliable in this dataset.\n- `boxes[]` are axis-aligned rectangles expressed as FRACTIONS of the rendered page: `left`/`width` are fractions of page width, `top`/`height` are fractions of page height, origin is the TOP-LEFT corner, y grows downward. All four values are in [0, 1]; producers must clamp (a few OCR boxes in the fixtures overshoot by <1%).\n- To render: x = left * pageWidthPx, y = top * pageHeightPx, w = width * pageWidthPx, h = height * pageHeightPx, where pageWidthPx/pageHeightPx are the on-screen size of the page as rendered (after any intrinsic /Rotate is applied by the viewer). This makes the schema independent of zoom and DPI.\n- A citation that needs several visual pieces (a value wrapped across two lines, or a label plus its value) uses several `boxes` on one anchor, or several anchors. Do not emit one big union rectangle across unrelated text.\n- `file` must be a PDF. For spreadsheets this is the `*-rendered.pdf`, never the .xlsx/.xls. Note: spreadsheet OCR block bboxes in this dataset are in CELL units (column/row indexes), not page fractions, and must not be copied into `page-region` boxes; use a `sheet-range` anchor instead.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "caseId", "citations"],
+  "properties": {
+    "schemaVersion": { "const": "citations/v1" },
+    "caseId": {
+      "type": "string",
+      "description": "Matches metadata.json `caseId`, e.g. `01-claim-evidence-review`."
+    },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "citations": {
+      "type": "object",
+      "description": "Map from JSON Pointer (into result.json) to the list of citations supporting that value. An empty array is a valid way to record 'searched, nothing found'.",
+      "propertyNames": { "$ref": "#/$defs/jsonPointer" },
+      "additionalProperties": {
+        "type": "array",
+        "items": { "$ref": "#/$defs/Citation" }
+      }
+    }
+  },
+  "$defs": {
+    "jsonPointer": {
+      "type": "string",
+      "pattern": "^(/([^/~]|~0|~1)*)*$",
+      "description": "RFC 6901 JSON Pointer. Array indexes are plain integers (`/coverage_list/0/coverage_name`)."
+    },
+    "fraction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "Rect": {
+      "type": "object",
+      "description": "Axis-aligned rectangle in normalized page coordinates (top-left origin, fractions of page width/height). See the coordinate contract on the root schema.",
+      "additionalProperties": false,
+      "required": ["left", "top", "width", "height"],
+      "properties": {
+        "left": { "$ref": "#/$defs/fraction" },
+        "top": { "$ref": "#/$defs/fraction" },
+        "width": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+        "height": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+      }
+    },
+    "role": {
+      "type": "string",
+      "enum": ["value", "label", "context"],
+      "default": "value",
+      "description": "What this anchor highlights. `value`: the text that *is* the cited value. `label`: the field label that identifies it (e.g. `TENANT(S):` for the boolean field /Tenants, whose definition is 'label is followed by a non-empty string'). `context`: supporting text that does not contain the value verbatim (e.g. a header establishing which document this is). UIs may style these differently; `value` is the default yellow."
+    },
+    "Citation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "source", "anchors"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Stable identifier unique within the file; lets the UI accept/reject/edit a specific citation."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["proposed", "accepted", "rejected"],
+          "description": "`proposed` = machine-generated and not yet reviewed. Reviewer actions move it to `accepted` or `rejected`. Rejected citations are kept (not deleted) so quality metrics can count them."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["auto", "manual"],
+          "description": "`auto` = produced by the citation run (deterministic or LLM). `manual` = drawn/entered by the reviewer in the UI."
+        },
+        "method": {
+          "type": "string",
+          "description": "Free-form producer tag for the auto path, e.g. `ocr-exact-match`, `ocr-fuzzy-match`, `llm:gpt-4.1-mini`, `reviewer`. Used to slice quality/cost metrics by strategy."
+        },
+        "confidence": {
+          "$ref": "#/$defs/fraction",
+          "description": "Producer's confidence that the anchors support the value. Omit for manual citations."
+        },
+        "quote": {
+          "type": "string",
+          "description": "Verbatim source text covered by the `value`-role anchors, as it appears in the source (before any normalization to the result format). If those anchors cover discontiguous segments, join the segments in reading order with a single space. A validator can check that the text under each anchor really is `quote`, and that `quote` is consistent with the result value under field-aware normalization (e.g. `$812.36` vs `812.36`, `Dec 20, 2025` vs `12/20/2025`; for boolean presence fields such as /Tenants, a non-empty `quote` is what supports `true`)."
+        },
+        "note": {
+          "type": "string",
+          "description": "Short human-readable rationale, shown in the UI on hover."
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "anchors": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Anchor" },
+          "description": "All anchors are rendered together when this citation is selected. Mixed kinds are allowed (e.g. a `page-region` on the rendered PDF plus a `sheet-range` on the workbook for the same evidence)."
+        }
+      }
+    },
+    "Anchor": {
+      "oneOf": [
+        { "$ref": "#/$defs/PageRegionAnchor" },
+        { "$ref": "#/$defs/TextSpanAnchor" },
+        { "$ref": "#/$defs/JsonPointerAnchor" },
+        { "$ref": "#/$defs/SheetRangeAnchor" }
+      ]
+    },
+    "PageRegionAnchor": {
+      "type": "object",
+      "description": "One or more highlight rectangles on a single PDF page. This is THE bounding-box shape the UI renders.",
+      "additionalProperties": false,
+      "required": ["kind", "file", "page", "boxes"],
+      "properties": {
+        "kind": { "const": "page-region" },
+        "file": {
+          "type": "string",
+          "pattern": "\\.[pP][dD][fF]$",
+          "description": "File name inside the case `files/` folder. Must be the PDF that is actually rendered: `document-03.pdf`, or `document-09-rendered.pdf` for a spreadsheet."
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1-indexed page number; equals `bbox.page` in the OCR artifact."
+        },
+        "boxes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Rect" },
+          "description": "Rectangles to fill yellow. Typically one per OCR line segment the evidence spans; producers merging adjacent OCR words into a single rect per line is encouraged."
+        },
+        "role": { "$ref": "#/$defs/role" },
+        "provenance": {
+          "type": "object",
+          "description": "Optional pointer back into the OCR artifact so the boxes can be re-derived or audited.",
+          "additionalProperties": false,
+          "properties": {
+            "ocrFile": { "type": "string" },
+            "chunkIndex": { "type": "integer", "minimum": 0 },
+            "blockIndex": { "type": "integer", "minimum": 0 },
+            "wordIndexes": {
+              "type": "array",
+              "items": { "type": "integer", "minimum": 0 },
+              "description": "Indexes into `ocr.words` for the words the boxes were built from."
+            }
+          }
+        }
+      }
+    },
+    "TextSpanAnchor": {
+      "type": "object",
+      "description": "A character range in a text-like source (txt, csv, eml, html, or a string field inside a JSON file). The UI highlights the range in a monospace text viewer.",
+      "additionalProperties": false,
+      "required": ["kind", "file", "start", "end"],
+      "properties": {
+        "kind": { "const": "text-span" },
+        "file": { "type": "string" },
+        "pointer": {
+          "$ref": "#/$defs/jsonPointer",
+          "description": "Only for JSON files: pointer to the string field the offsets are relative to, e.g. `/bodyPlain` in an email-json file. When omitted, offsets are relative to the whole file's text content (UTF-8 decoded, line endings preserved)."
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "0-based inclusive offset in UTF-16 code units (JavaScript string indexing)."
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "0-based exclusive end offset. Must be > start."
+        },
+        "role": { "$ref": "#/$defs/role" }
+      }
+    },
+    "JsonPointerAnchor": {
+      "type": "object",
+      "description": "A whole value inside a JSON source file. Use when the value is an entire field (e.g. `/subject` of an email-json file); use `text-span` with `pointer` when only part of a string is the evidence.",
+      "additionalProperties": false,
+      "required": ["kind", "file", "pointer"],
+      "properties": {
+        "kind": { "const": "json-pointer" },
+        "file": { "type": "string", "pattern": "\\.[jJ][sS][oO][nN]$" },
+        "pointer": { "$ref": "#/$defs/jsonPointer" },
+        "role": { "$ref": "#/$defs/role" }
+      }
+    },
+    "SheetRangeAnchor": {
+      "type": "object",
+      "description": "A cell or rectangular range in a spreadsheet (xlsx/xls/csv). This is the authoritative anchor for spreadsheet evidence. If the producer has also projected the range onto the `*-rendered.pdf`, add a sibling `page-region` anchor on the same citation; the UI uses whichever matches the active viewer.",
+      "additionalProperties": false,
+      "required": ["kind", "file", "range"],
+      "properties": {
+        "kind": { "const": "sheet-range" },
+        "file": { "type": "string", "pattern": "\\.([xX][lL][sS][xX]?|[cC][sS][vV])$" },
+        "sheet": {
+          "type": "string",
+          "description": "Worksheet name. Required for xlsx/xls; omit for csv."
+        },
+        "range": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,3}[1-9][0-9]*(:[A-Z]{1,3}[1-9][0-9]*)?$",
+          "description": "A1-style cell (`C7`) or range (`B4:D6`). Row/column indexes are 1-based as in Excel."
+        },
+        "role": { "$ref": "#/$defs/role" }
+      }
+    }
+  }
+}

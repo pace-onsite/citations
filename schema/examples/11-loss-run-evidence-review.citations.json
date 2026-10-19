@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "citations/v1",
+  "caseId": "11-loss-run-evidence-review",
+  "generatedAt": "2026-10-19T14:45:00Z",
+  "citations": {
+    "/Policy Periods/91/Policy Number": [
+      {
+        "id": "c-pp91-policy-1",
+        "status": "proposed",
+        "source": "auto",
+        "method": "cell-exact-match",
+        "confidence": 0.98,
+        "quote": "61875752",
+        "note": "Loss-run summary row for the 09/01/2024 - 09/01/2025 term. Sheet cell is authoritative; the page-region is its projection onto the rendered PDF for visual highlighting.",
+        "createdAt": "2026-10-19T14:45:00Z",
+        "anchors": [
+          {
+            "kind": "sheet-range",
+            "file": "document-09.xlsx",
+            "sheet": "Summary",
+            "range": "C7"
+          },
+          {
+            "kind": "page-region",
+            "file": "document-09-rendered.pdf",
+            "page": 1,
+            "boxes": [
+              {
+                "left": 0.25844,
+                "top": 0.70973,
+                "width": 0.05589,
+                "height": 0.02817
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "/Policy Periods/91/Effective Date": [
+      {
+        "id": "c-pp91-eff-1",
+        "status": "proposed",
+        "source": "auto",
+        "method": "cell-fuzzy-match",
+        "confidence": 0.9,
+        "quote": "09/01/2024 - 09/01/2025",
+        "note": "Result splits the term string into Effective/Expiration; the cell holds both.",
+        "createdAt": "2026-10-19T14:45:00Z",
+        "anchors": [
+          {
+            "kind": "sheet-range",
+            "file": "document-09.xlsx",
+            "sheet": "Summary",
+            "range": "D7"
+          }
+        ]
+      }
+    ],
+    "/Policy Periods/0/Source Documents/0/Document Name": [
+      {
+        "id": "c-pp0-doc0-1",
+        "status": "proposed",
+        "source": "auto",
+        "method": "json-exact-match",
+        "confidence": 0.98,
+        "quote": "input__2025_09_BAUT_CGL_CUMB_WORK_Loss_2019-2025_v-04-10-2025_CNA.pdf",
+        "note": "Attachment list on the request email.",
+        "createdAt": "2026-10-19T14:45:00Z",
+        "anchors": [
+          {
+            "kind": "json-pointer",
+            "file": "document-01.json",
+            "pointer": "/attachments/0/name"
+          }
+        ]
+      }
+    ],
+    "/Insured Name": [
+      {
+        "id": "c-insured-1",
+        "status": "proposed",
+        "source": "auto",
+        "method": "text-normalized-match",
+        "confidence": 0.3,
+        "quote": "Erdman Company",
+        "note": "Result says 'MEA Holdings, Inc.' but every source names Erdman Company; cited as context so a reviewer sees the discrepancy.",
+        "createdAt": "2026-10-19T14:45:00Z",
+        "anchors": [
+          {
+            "kind": "text-span",
+            "file": "document-01.json",
+            "pointer": "/subject",
+            "start": 7,
+            "end": 21,
+            "role": "context"
+          }
+        ]
+      }
+    ]
+  }
+}

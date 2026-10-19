@@ -1,0 +1,4126 @@
+{
+  "generatedAt": "2026-05-10T22:25:06.734Z",
+  "totals": {
+    "cases": 40,
+    "files": 374,
+    "pdfFiles": 231,
+    "excelFiles": 39,
+    "spreadsheetFiles": 59,
+    "structuredFiles": 78,
+    "ocrFiles": 271
+  },
+  "cases": [
+    {
+      "caseId": "01-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 01",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "General loss report summary",
+      "receivedAt": "2026-03-16T22:36:25.489Z",
+      "resultSizeBytes": 1679,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 10,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 10
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "email-json",
+          "file": "document-05.json",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "csv",
+          "file": "document-11.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "pdf",
+          "file": "document-12.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 931568,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/01-claim-evidence-review"
+    },
+    {
+      "caseId": "02-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 02",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Estimate summary",
+      "receivedAt": "2026-03-25T07:51:27.219Z",
+      "resultSizeBytes": 2281,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 10,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 9
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "email-json",
+          "file": "document-02.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "csv",
+          "file": "document-12.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 761185,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/02-claim-evidence-review"
+    },
+    {
+      "caseId": "03-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 03",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Roof depreciation check",
+      "receivedAt": "2026-03-26T07:45:18.312Z",
+      "resultSizeBytes": 1625,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 10,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 9
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "email-json",
+          "file": "document-08.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "csv",
+          "file": "document-10.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "pdf",
+          "file": "document-12.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 874668,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/03-claim-evidence-review"
+    },
+    {
+      "caseId": "04-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 04",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Policy declaration summary",
+      "receivedAt": "2026-04-24T22:30:30.972Z",
+      "resultSizeBytes": 4564,
+      "sourceFileCounts": {
+        "total": 11,
+        "pdf": 9,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 9
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "csv",
+          "file": "document-01.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "email-json",
+          "file": "document-05.json",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 532231,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/04-claim-evidence-review"
+    },
+    {
+      "caseId": "05-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 05",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Insured profile",
+      "receivedAt": "2026-04-17T12:31:42.308Z",
+      "resultSizeBytes": 1918,
+      "sourceFileCounts": {
+        "total": 11,
+        "pdf": 9,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 9
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "email-json",
+          "file": "document-03.json",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "csv",
+          "file": "document-10.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 869115,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/05-claim-evidence-review"
+    },
+    {
+      "caseId": "06-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 06",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Grammar/Spell Check",
+      "receivedAt": "2026-05-04T06:28:45.965Z",
+      "resultSizeBytes": 1629,
+      "sourceFileCounts": {
+        "total": 11,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 9
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "email-json",
+          "file": "document-02.json",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "docx",
+          "file": "document-04.docx",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "csv",
+          "file": "document-10.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 405018,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/06-claim-evidence-review"
+    },
+    {
+      "caseId": "07-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 07",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Roof depreciation check",
+      "receivedAt": "2026-03-31T15:21:02.351Z",
+      "resultSizeBytes": 3124,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 8
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "email-json",
+          "file": "document-03.json",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "csv",
+          "file": "document-10.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1486032,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/07-claim-evidence-review"
+    },
+    {
+      "caseId": "08-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 08",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Estimate summary",
+      "receivedAt": "2026-03-24T08:42:21.920Z",
+      "resultSizeBytes": 4312,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "email-json",
+          "file": "document-04.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "csv",
+          "file": "document-10.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 819731,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/08-claim-evidence-review"
+    },
+    {
+      "caseId": "09-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 09",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Estimate summary",
+      "receivedAt": "2026-03-20T08:14:07.968Z",
+      "resultSizeBytes": 2966,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "csv",
+          "file": "document-01.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "email-json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1154394,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/09-claim-evidence-review"
+    },
+    {
+      "caseId": "10-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 10",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Roof depreciation check",
+      "receivedAt": "2026-04-17T02:35:48.805Z",
+      "resultSizeBytes": 2636,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "email-json",
+          "file": "document-02.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "csv",
+          "file": "document-09.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 770173,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/10-claim-evidence-review"
+    },
+    {
+      "caseId": "11-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 11",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Policy number list",
+      "receivedAt": "2026-05-10T02:28:26.732Z",
+      "resultSizeBytes": 23220,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 10,
+        "spreadsheet": 1,
+        "excel": 1,
+        "structured": 1,
+        "ocr": 12
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "email-json",
+          "file": "document-01.json",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "xlsx",
+          "file": "document-09.xlsx",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": "document-09-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "pdf",
+          "file": "document-12.pdf",
+          "ocrArtifact": "document-12-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1459225,
+        "modelCallCount": 1019,
+        "inputTokens": 20268967,
+        "outputTokens": 269255,
+        "cachedInputTokens": 15031168
+      },
+      "directory": "test-cases/11-loss-run-evidence-review"
+    },
+    {
+      "caseId": "12-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 12",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Policy number list",
+      "receivedAt": "2026-05-09T20:37:17.687Z",
+      "resultSizeBytes": 23216,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 10,
+        "spreadsheet": 1,
+        "excel": 1,
+        "structured": 1,
+        "ocr": 11
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "json",
+          "file": "document-03.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "xlsx",
+          "file": "document-07.xlsx",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": "document-07-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "pdf",
+          "file": "document-12.pdf",
+          "ocrArtifact": "document-12-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1591546,
+        "modelCallCount": 716,
+        "inputTokens": 17642174,
+        "outputTokens": 216964,
+        "cachedInputTokens": 7462784
+      },
+      "directory": "test-cases/12-loss-run-evidence-review"
+    },
+    {
+      "caseId": "13-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 13",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Policy number list",
+      "receivedAt": "2026-05-09T03:24:36.229Z",
+      "resultSizeBytes": 6362,
+      "sourceFileCounts": {
+        "total": 11,
+        "pdf": 5,
+        "spreadsheet": 5,
+        "excel": 5,
+        "structured": 1,
+        "ocr": 10
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xlsx",
+          "file": "document-01.xlsx",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xlsx",
+          "file": "document-02.xlsx",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "json",
+          "file": "document-03.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "xlsx",
+          "file": "document-06.xlsx",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": "document-06-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "xlsx",
+          "file": "document-07.xlsx",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": "document-07-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "xlsx",
+          "file": "document-11.xlsx",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": "document-11-rendered.pdf",
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1635331,
+        "modelCallCount": 1693,
+        "inputTokens": 30539891,
+        "outputTokens": 632594,
+        "cachedInputTokens": 22558336
+      },
+      "directory": "test-cases/13-loss-run-evidence-review"
+    },
+    {
+      "caseId": "14-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 14",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Policy number list",
+      "receivedAt": "2026-05-08T22:11:11.769Z",
+      "resultSizeBytes": 9575,
+      "sourceFileCounts": {
+        "total": 11,
+        "pdf": 5,
+        "spreadsheet": 5,
+        "excel": 5,
+        "structured": 1,
+        "ocr": 10
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xlsx",
+          "file": "document-02.xlsx",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "xlsx",
+          "file": "document-05.xlsx",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": "document-05-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "json",
+          "file": "document-07.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "xlsx",
+          "file": "document-09.xlsx",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": "document-09-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "xlsx",
+          "file": "document-10.xlsx",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": "document-10-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "xlsx",
+          "file": "document-11.xlsx",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": "document-11-rendered.pdf",
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1687486,
+        "modelCallCount": 1800,
+        "inputTokens": 55981177,
+        "outputTokens": 668242,
+        "cachedInputTokens": 37700480
+      },
+      "directory": "test-cases/14-loss-run-evidence-review"
+    },
+    {
+      "caseId": "15-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 15",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Loss-run claim summary",
+      "receivedAt": "2026-05-07T15:02:27.206Z",
+      "resultSizeBytes": 24985,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 4,
+        "spreadsheet": 5,
+        "excel": 5,
+        "structured": 3,
+        "ocr": 9
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xls",
+          "file": "document-01.xls",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xls",
+          "file": "document-02.xls",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "xls",
+          "file": "document-04.xls",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": "document-04-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "json",
+          "file": "document-07.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "json",
+          "file": "document-09.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "xls",
+          "file": "document-10.xls",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": "document-10-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "json",
+          "file": "document-11.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "xls",
+          "file": "document-12.xls",
+          "ocrArtifact": "document-12-ocr.json",
+          "renderedPdf": "document-12-rendered.pdf",
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1639173,
+        "modelCallCount": 866,
+        "inputTokens": 18454150,
+        "outputTokens": 321410,
+        "cachedInputTokens": 15050240
+      },
+      "directory": "test-cases/15-loss-run-evidence-review"
+    },
+    {
+      "caseId": "16-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 16",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Loss-run claim summary",
+      "receivedAt": "2026-05-07T15:41:53.642Z",
+      "resultSizeBytes": 46200,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 5,
+        "spreadsheet": 4,
+        "excel": 4,
+        "structured": 3,
+        "ocr": 9
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xlsx",
+          "file": "document-01.xlsx",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xlsx",
+          "file": "document-02.xlsx",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "json",
+          "file": "document-03.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "xlsx",
+          "file": "document-06.xlsx",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": "document-06-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "json",
+          "file": "document-07.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "json",
+          "file": "document-08.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "xlsx",
+          "file": "document-09.xlsx",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": "document-09-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "pdf",
+          "file": "document-12.pdf",
+          "ocrArtifact": "document-12-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 3313001,
+        "modelCallCount": 450,
+        "inputTokens": 15476534,
+        "outputTokens": 298832,
+        "cachedInputTokens": 12524672
+      },
+      "directory": "test-cases/16-loss-run-evidence-review"
+    },
+    {
+      "caseId": "17-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 17",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Large loss summary",
+      "receivedAt": "2026-05-08T12:55:33.136Z",
+      "resultSizeBytes": 3305,
+      "sourceFileCounts": {
+        "total": 12,
+        "pdf": 9,
+        "spreadsheet": 1,
+        "excel": 1,
+        "structured": 2,
+        "ocr": 10
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "json",
+          "file": "document-02.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "xls",
+          "file": "document-08.xls",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": "document-08-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": "document-11-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 12",
+          "documentType": "pdf",
+          "file": "document-12.pdf",
+          "ocrArtifact": "document-12-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1631581,
+        "modelCallCount": 340,
+        "inputTokens": 10069889,
+        "outputTokens": 187874,
+        "cachedInputTokens": 6908288
+      },
+      "directory": "test-cases/17-loss-run-evidence-review"
+    },
+    {
+      "caseId": "18-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 18",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Loss-run claim summary",
+      "receivedAt": "2026-05-07T16:42:22.421Z",
+      "resultSizeBytes": 35742,
+      "sourceFileCounts": {
+        "total": 9,
+        "pdf": 2,
+        "spreadsheet": 4,
+        "excel": 4,
+        "structured": 3,
+        "ocr": 6
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xlsx",
+          "file": "document-01.xlsx",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xlsx",
+          "file": "document-02.xlsx",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "json",
+          "file": "document-04.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "xlsx",
+          "file": "document-06.xlsx",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": "document-06-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "xlsx",
+          "file": "document-07.xlsx",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": "document-07-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "json",
+          "file": "document-08.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "json",
+          "file": "document-09.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1577371,
+        "modelCallCount": 647,
+        "inputTokens": 13087014,
+        "outputTokens": 249618,
+        "cachedInputTokens": 10865024
+      },
+      "directory": "test-cases/18-loss-run-evidence-review"
+    },
+    {
+      "caseId": "19-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 19",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Loss-run claim summary",
+      "receivedAt": "2026-05-07T18:02:29.555Z",
+      "resultSizeBytes": 31962,
+      "sourceFileCounts": {
+        "total": 8,
+        "pdf": 2,
+        "spreadsheet": 3,
+        "excel": 3,
+        "structured": 3,
+        "ocr": 5
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xlsx",
+          "file": "document-01.xlsx",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "json",
+          "file": "document-02.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "xlsx",
+          "file": "document-03.xlsx",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": "document-03-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "xlsx",
+          "file": "document-04.xlsx",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": "document-04-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "json",
+          "file": "document-06.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1293545,
+        "modelCallCount": 404,
+        "inputTokens": 5740031,
+        "outputTokens": 159192,
+        "cachedInputTokens": 4273408
+      },
+      "directory": "test-cases/19-loss-run-evidence-review"
+    },
+    {
+      "caseId": "20-placement-evidence-review",
+      "caseTitle": "Placement evidence review 20",
+      "industry": "Insurance",
+      "scenario": "Commercial property placement submission",
+      "reviewType": "Placement evidence review",
+      "resultType": "Placement summary",
+      "receivedAt": "2026-05-10T10:04:15.673Z",
+      "resultSizeBytes": 1437,
+      "sourceFileCounts": {
+        "total": 6,
+        "pdf": 1,
+        "spreadsheet": 2,
+        "excel": 2,
+        "structured": 1,
+        "ocr": 6
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xlsx",
+          "file": "document-01.xlsx",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xlsx",
+          "file": "document-02.xlsx",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "email-eml",
+          "file": "document-03.eml",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "docx",
+          "file": "document-04.docx",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "docx",
+          "file": "document-05.docx",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 881777,
+        "modelCallCount": 736,
+        "inputTokens": 12340163,
+        "outputTokens": 213141,
+        "cachedInputTokens": 8693287
+      },
+      "directory": "test-cases/20-placement-evidence-review"
+    },
+    {
+      "caseId": "21-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 21",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Estimate summary",
+      "receivedAt": "2026-03-20T07:17:28.801Z",
+      "resultSizeBytes": 2086,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "email-json",
+          "file": "document-07.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "csv",
+          "file": "document-10.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 870045,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/21-claim-evidence-review"
+    },
+    {
+      "caseId": "22-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 22",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Grammar/Spell Check",
+      "receivedAt": "2026-04-27T19:44:53.255Z",
+      "resultSizeBytes": 2083,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "csv",
+          "file": "document-01.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "email-json",
+          "file": "document-09.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 725876,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/22-claim-evidence-review"
+    },
+    {
+      "caseId": "23-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 23",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Roof depreciation check",
+      "receivedAt": "2026-04-24T00:51:17.794Z",
+      "resultSizeBytes": 2266,
+      "sourceFileCounts": {
+        "total": 11,
+        "pdf": 8,
+        "spreadsheet": 2,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 6
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "email-json",
+          "file": "document-04.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "csv",
+          "file": "document-08.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "csv",
+          "file": "document-09.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "pdf",
+          "file": "document-11.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 601349,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/23-claim-evidence-review"
+    },
+    {
+      "caseId": "24-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 24",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Policy declaration summary",
+      "receivedAt": "2026-04-17T03:10:42.937Z",
+      "resultSizeBytes": 1855,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "email-json",
+          "file": "document-02.498 - 9742ab34 trigger email",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "csv",
+          "file": "document-09.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 711868,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/24-claim-evidence-review"
+    },
+    {
+      "caseId": "25-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 25",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Insured profile",
+      "receivedAt": "2026-05-01T07:42:44.881Z",
+      "resultSizeBytes": 1220,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "csv",
+          "file": "document-01.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "email-json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 585477,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/25-claim-evidence-review"
+    },
+    {
+      "caseId": "26-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 26",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Opening Statement",
+      "receivedAt": "2026-04-06T20:07:22.240Z",
+      "resultSizeBytes": 1054,
+      "sourceFileCounts": {
+        "total": 10,
+        "pdf": 8,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "csv",
+          "file": "document-03.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "email-json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "pdf",
+          "file": "document-10.pdf",
+          "ocrArtifact": "document-10-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1000880,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/26-claim-evidence-review"
+    },
+    {
+      "caseId": "27-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 27",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Policy declaration summary",
+      "receivedAt": "2026-04-21T17:52:43.397Z",
+      "resultSizeBytes": 5101,
+      "sourceFileCounts": {
+        "total": 9,
+        "pdf": 7,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "email-json",
+          "file": "document-03.json",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "csv",
+          "file": "document-09.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1132405,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/27-claim-evidence-review"
+    },
+    {
+      "caseId": "28-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 28",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Policy declaration summary",
+      "receivedAt": "2026-03-13T00:58:11.427Z",
+      "resultSizeBytes": 4811,
+      "sourceFileCounts": {
+        "total": 9,
+        "pdf": 7,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "email-json",
+          "file": "document-01.json",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "csv",
+          "file": "document-09.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1808827,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/28-claim-evidence-review"
+    },
+    {
+      "caseId": "29-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 29",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Claim Information",
+      "receivedAt": "2026-04-21T00:40:24.390Z",
+      "resultSizeBytes": 2268,
+      "sourceFileCounts": {
+        "total": 8,
+        "pdf": 7,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 8
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "email-json",
+          "file": "document-02.json",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 14775,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/29-claim-evidence-review"
+    },
+    {
+      "caseId": "30-claim-evidence-review",
+      "caseTitle": "Claim estimate evidence review 30",
+      "industry": "Insurance",
+      "scenario": "Property claim document packet",
+      "reviewType": "Claim estimate evidence review",
+      "resultType": "Grammar/Spell Check",
+      "receivedAt": "2026-04-30T01:02:33.843Z",
+      "resultSizeBytes": 2582,
+      "sourceFileCounts": {
+        "total": 9,
+        "pdf": 7,
+        "spreadsheet": 1,
+        "excel": 0,
+        "structured": 1,
+        "ocr": 7
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "csv",
+          "file": "document-02.csv",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "email-json",
+          "file": "document-06.json",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "pdf",
+          "file": "document-07.pdf",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "pdf",
+          "file": "document-08.pdf",
+          "ocrArtifact": "document-08-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "pdf",
+          "file": "document-09.pdf",
+          "ocrArtifact": "document-09-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 726704,
+        "modelCallCount": 0,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "cachedInputTokens": 0
+      },
+      "directory": "test-cases/30-claim-evidence-review"
+    },
+    {
+      "caseId": "31-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 31",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Large loss summary",
+      "receivedAt": "2026-05-08T18:03:09.053Z",
+      "resultSizeBytes": 4000,
+      "sourceFileCounts": {
+        "total": 5,
+        "pdf": 2,
+        "spreadsheet": 3,
+        "excel": 3,
+        "structured": 0,
+        "ocr": 5
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xlsx",
+          "file": "document-02.xlsx",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "xlsx",
+          "file": "document-03.xlsx",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": "document-03-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "xlsx",
+          "file": "document-05.xlsx",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": "document-05-rendered.pdf",
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1294434,
+        "modelCallCount": 437,
+        "inputTokens": 7328365,
+        "outputTokens": 177327,
+        "cachedInputTokens": 5698816
+      },
+      "directory": "test-cases/31-loss-run-evidence-review"
+    },
+    {
+      "caseId": "32-loss-run-evidence-review",
+      "caseTitle": "Loss-run evidence review 32",
+      "industry": "Insurance",
+      "scenario": "Commercial loss-run packet",
+      "reviewType": "Loss-run evidence review",
+      "resultType": "Large loss summary",
+      "receivedAt": "2026-05-09T18:03:57.697Z",
+      "resultSizeBytes": 8353,
+      "sourceFileCounts": {
+        "total": 5,
+        "pdf": 3,
+        "spreadsheet": 2,
+        "excel": 2,
+        "structured": 0,
+        "ocr": 5
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xlsx",
+          "file": "document-01.xlsx",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "xlsx",
+          "file": "document-03.xlsx",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": "document-03-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 914876,
+        "modelCallCount": 254,
+        "inputTokens": 4622755,
+        "outputTokens": 135269,
+        "cachedInputTokens": 3130240
+      },
+      "directory": "test-cases/32-loss-run-evidence-review"
+    },
+    {
+      "caseId": "33-placement-evidence-review",
+      "caseTitle": "Placement evidence review 33",
+      "industry": "Insurance",
+      "scenario": "Commercial property placement submission",
+      "reviewType": "Placement evidence review",
+      "resultType": "Binder insurance summary",
+      "receivedAt": "2026-05-07T19:22:50.608Z",
+      "resultSizeBytes": 2267,
+      "sourceFileCounts": {
+        "total": 4,
+        "pdf": 1,
+        "spreadsheet": 3,
+        "excel": 3,
+        "structured": 0,
+        "ocr": 4
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "xlsx",
+          "file": "document-01.xlsx",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": "document-01-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "xlsx",
+          "file": "document-02.xlsx",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": "document-02-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "xlsx",
+          "file": "document-03.xlsx",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": "document-03-rendered.pdf",
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1039542,
+        "modelCallCount": 230,
+        "inputTokens": 1723283,
+        "outputTokens": 100594,
+        "cachedInputTokens": 1350528
+      },
+      "directory": "test-cases/33-placement-evidence-review"
+    },
+    {
+      "caseId": "34-certificate-evidence-review",
+      "caseTitle": "Certificate evidence review 34",
+      "industry": "Insurance",
+      "scenario": "Certificate of insurance request",
+      "reviewType": "Certificate evidence review",
+      "resultType": "Certificate request",
+      "receivedAt": "2026-05-10T14:32:14.212Z",
+      "resultSizeBytes": 13660,
+      "sourceFileCounts": {
+        "total": 7,
+        "pdf": 2,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 4,
+        "ocr": 4
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "html",
+          "file": "document-01.html",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "email-eml",
+          "file": "document-02.eml",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "txt",
+          "file": "document-03.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "txt",
+          "file": "document-04.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "pdf",
+          "file": "document-05.pdf",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "pdf",
+          "file": "document-06.pdf",
+          "ocrArtifact": "document-06-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "txt",
+          "file": "document-07.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1090268,
+        "modelCallCount": 494,
+        "inputTokens": 4776637,
+        "outputTokens": 110420,
+        "cachedInputTokens": 3676160
+      },
+      "directory": "test-cases/34-certificate-evidence-review"
+    },
+    {
+      "caseId": "35-certificate-evidence-review",
+      "caseTitle": "Certificate evidence review 35",
+      "industry": "Insurance",
+      "scenario": "Certificate of insurance request",
+      "reviewType": "Certificate evidence review",
+      "resultType": "Certificate request",
+      "receivedAt": "2026-05-10T05:00:49.264Z",
+      "resultSizeBytes": 8270,
+      "sourceFileCounts": {
+        "total": 7,
+        "pdf": 2,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 4,
+        "ocr": 4
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "txt",
+          "file": "document-01.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "pdf",
+          "file": "document-03.pdf",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "txt",
+          "file": "document-04.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "html",
+          "file": "document-05.html",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "txt",
+          "file": "document-06.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "email-eml",
+          "file": "document-07.eml",
+          "ocrArtifact": "document-07-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1785730,
+        "modelCallCount": 487,
+        "inputTokens": 8006199,
+        "outputTokens": 272961,
+        "cachedInputTokens": 6650112
+      },
+      "directory": "test-cases/35-certificate-evidence-review"
+    },
+    {
+      "caseId": "36-certificate-evidence-review",
+      "caseTitle": "Certificate evidence review 36",
+      "industry": "Insurance",
+      "scenario": "Certificate of insurance request",
+      "reviewType": "Certificate evidence review",
+      "resultType": "Certificate request",
+      "receivedAt": "2026-05-10T04:44:59.404Z",
+      "resultSizeBytes": 7114,
+      "sourceFileCounts": {
+        "total": 7,
+        "pdf": 2,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 4,
+        "ocr": 4
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "txt",
+          "file": "document-01.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "pdf",
+          "file": "document-02.pdf",
+          "ocrArtifact": "document-02-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "html",
+          "file": "document-03.html",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "email-eml",
+          "file": "document-05.eml",
+          "ocrArtifact": "document-05-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "txt",
+          "file": "document-06.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "txt",
+          "file": "document-07.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 1971279,
+        "modelCallCount": 519,
+        "inputTokens": 7547808,
+        "outputTokens": 265545,
+        "cachedInputTokens": 6412800
+      },
+      "directory": "test-cases/36-certificate-evidence-review"
+    },
+    {
+      "caseId": "37-certificate-evidence-review",
+      "caseTitle": "Certificate evidence review 37",
+      "industry": "Insurance",
+      "scenario": "Certificate of insurance request",
+      "reviewType": "Certificate evidence review",
+      "resultType": "Certificate guideline summary",
+      "receivedAt": "2026-05-07T17:54:40.730Z",
+      "resultSizeBytes": 1214,
+      "sourceFileCounts": {
+        "total": 11,
+        "pdf": 0,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 11,
+        "ocr": 0
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "json",
+          "file": "document-01.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "json",
+          "file": "document-02.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "json",
+          "file": "document-03.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "json",
+          "file": "document-04.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "json",
+          "file": "document-06.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 07",
+          "documentType": "json",
+          "file": "document-07.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 08",
+          "documentType": "json",
+          "file": "document-08.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 09",
+          "documentType": "json",
+          "file": "document-09.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 10",
+          "documentType": "json",
+          "file": "document-10.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 11",
+          "documentType": "json",
+          "file": "document-11.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 2755530,
+        "modelCallCount": 1041,
+        "inputTokens": 14907485,
+        "outputTokens": 522708,
+        "cachedInputTokens": 11982976
+      },
+      "directory": "test-cases/37-certificate-evidence-review"
+    },
+    {
+      "caseId": "38-certificate-evidence-review",
+      "caseTitle": "Certificate evidence review 38",
+      "industry": "Insurance",
+      "scenario": "Certificate of insurance request",
+      "reviewType": "Certificate evidence review",
+      "resultType": "Certificate request",
+      "receivedAt": "2026-05-10T14:32:06.193Z",
+      "resultSizeBytes": 12062,
+      "sourceFileCounts": {
+        "total": 6,
+        "pdf": 2,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 4,
+        "ocr": 3
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "pdf",
+          "file": "document-01.pdf",
+          "ocrArtifact": "document-01-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "txt",
+          "file": "document-02.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "email-eml",
+          "file": "document-03.eml",
+          "ocrArtifact": "document-03-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "pdf",
+          "file": "document-04.pdf",
+          "ocrArtifact": "document-04-ocr.json",
+          "renderedPdf": null,
+          "hasOcrArtifact": true
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "txt",
+          "file": "document-05.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "txt",
+          "file": "document-06.txt",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 726962,
+        "modelCallCount": 391,
+        "inputTokens": 3381567,
+        "outputTokens": 86772,
+        "cachedInputTokens": 2507520
+      },
+      "directory": "test-cases/38-certificate-evidence-review"
+    },
+    {
+      "caseId": "39-certificate-evidence-review",
+      "caseTitle": "Certificate evidence review 39",
+      "industry": "Insurance",
+      "scenario": "Certificate of insurance request",
+      "reviewType": "Certificate evidence review",
+      "resultType": "Certificate form summary",
+      "receivedAt": "2026-05-11T01:58:58.230Z",
+      "resultSizeBytes": 4311,
+      "sourceFileCounts": {
+        "total": 6,
+        "pdf": 0,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 6,
+        "ocr": 0
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "json",
+          "file": "document-01.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "json",
+          "file": "document-02.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "json",
+          "file": "document-03.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "json",
+          "file": "document-04.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "json",
+          "file": "document-06.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 674371,
+        "modelCallCount": 504,
+        "inputTokens": 8462733,
+        "outputTokens": 89635,
+        "cachedInputTokens": 7517920
+      },
+      "directory": "test-cases/39-certificate-evidence-review"
+    },
+    {
+      "caseId": "40-certificate-evidence-review",
+      "caseTitle": "Certificate evidence review 40",
+      "industry": "Insurance",
+      "scenario": "Certificate of insurance request",
+      "reviewType": "Certificate evidence review",
+      "resultType": "Certificate form summary",
+      "receivedAt": "2026-05-11T01:58:55.557Z",
+      "resultSizeBytes": 6387,
+      "sourceFileCounts": {
+        "total": 6,
+        "pdf": 0,
+        "spreadsheet": 0,
+        "excel": 0,
+        "structured": 6,
+        "ocr": 0
+      },
+      "sourceFiles": [
+        {
+          "documentName": "Source document 01",
+          "documentType": "json",
+          "file": "document-01.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 02",
+          "documentType": "json",
+          "file": "document-02.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 03",
+          "documentType": "json",
+          "file": "document-03.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 04",
+          "documentType": "json",
+          "file": "document-04.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 05",
+          "documentType": "json",
+          "file": "document-05.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        },
+        {
+          "documentName": "Source document 06",
+          "documentType": "json",
+          "file": "document-06.json",
+          "ocrArtifact": null,
+          "renderedPdf": null,
+          "hasOcrArtifact": false
+        }
+      ],
+      "benchmarkMetrics": {
+        "totalLatencyMs": 822576,
+        "modelCallCount": 617,
+        "inputTokens": 8492612,
+        "outputTokens": 103762,
+        "cachedInputTokens": 7361564
+      },
+      "directory": "test-cases/40-certificate-evidence-review"
+    }
+  ]
+}
