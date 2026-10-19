@@ -25,7 +25,7 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
       if (needle && !f.pointer.toLowerCase().includes(needle) && !formatValue(f.value).toLowerCase().includes(needle)) return false;
       if (filter === "all") return true;
       const list = set.citations[f.pointer] ?? [];
-      if (!isLeaf(f)) return filter === "all";
+      if (!isLeaf(f)) return false;
       if (filter === "cited") return list.length > 0;
       if (filter === "uncited") return list.length === 0;
       if (filter === "needs-review") return list.some((c) => c.status === "proposed");

@@ -57,9 +57,9 @@ export function casesPlugin(repoRoot: string): Plugin {
     const ids = entries.filter((e) => e.isDirectory()).map((e) => e.name).sort();
     return Promise.all(
       ids.map(async (id) => {
-        const meta = await readJson<Record<string, unknown>>(
+        const meta: Record<string, unknown> = await readJson<Record<string, unknown>>(
           path.join(casesDir, id, "metadata.json"),
-        ).catch(() => ({}));
+        ).catch(() => ({}) as Record<string, unknown>);
         return {
           id,
           caseTitle: meta.caseTitle ?? id,
