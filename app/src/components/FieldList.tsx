@@ -77,7 +77,11 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
                 {/^\d+$/.test(name) ? <span className="idx">[{name}]</span> : name}
                 {f.definition?.type && <span className="type">{f.definition.type}</span>}
               </span>
-              {leaf && <span className={`value t-${f.valueType}`}>{formatValue(f.value)}</span>}
+              {leaf && (
+                <span className={`value t-${f.valueType}`}>
+                  {f.value === "" ? <span className="blank">“” (empty string)</span> : formatValue(f.value)}
+                </span>
+              )}
               {leaf && (
                 <span className="badges">
                   {list !== undefined && list.length === 0 && <span className="pill none" title="searched, nothing found">∅</span>}

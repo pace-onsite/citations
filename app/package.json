@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "validate:citations": "node --experimental-strip-types --no-warnings=ExperimentalWarning scripts/validate-citations.ts"
+    "validate:citations": "node --experimental-strip-types --no-warnings=ExperimentalWarning scripts/validate-citations.ts",
+    "cite": "node --experimental-strip-types --no-warnings=ExperimentalWarning scripts/cite.ts"
   },
   "dependencies": {
     "ajv": "^8.17.1",

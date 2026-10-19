@@ -33,8 +33,10 @@ type TextSpanAnchor = { kind: "text-span"; file: string; pointer?: string; start
 type JsonPointerAnchor = { kind: "json-pointer"; file: string; pointer: string; role?: AnchorRole };
 type SheetRangeAnchor = { kind: "sheet-range"; file: string; sheet?: string; range: string; role?: AnchorRole };
 type Anchor = PageRegionAnchor | TextSpanAnchor | JsonPointerAnchor | SheetRangeAnchor;
-type OcrBbox = { left: number; top: number; width: number; height: number; page: number };
+type OcrBbox = { left: number; top: number; width: number; height: number; page: number; original_page?: number };
 type OcrWord = { text: string; bbox: OcrBbox };
+// bbox.page resets inside long OCR jobs. original_page is the PDF page the box is drawn on.
+const pdfPage = (b: OcrBbox) => (Number.isInteger(b.original_page) && b.original_page! >= 1 ? b.original_page! : b.page);
 
 // Box derivation used to build the ground truth: clamp each OCR word bbox into
 // the page, then merge words that sit on the same visual line into one rect.
@@ -67,8 +69,8 @@ const mergeLineRects = (rects: Rect[], minOverlap = 0.5): Rect[] => {
 };
 const anchorFromWords = (file: string, words: OcrWord[], wordIndexes: number[]): PageRegionAnchor => {
   if (!words.length) throw new Error("anchorFromWords: no words");
-  const page = words[0]!.bbox.page;
-  if (words.some((w) => w.bbox.page !== page)) throw new Error("words span multiple pages; emit one anchor per page");
+  const page = pdfPage(words[0]!.bbox);
+  if (words.some((w) => pdfPage(w.bbox) !== page)) throw new Error("words span multiple pages; emit one anchor per page");
   return { kind: "page-region", file, page, boxes: mergeLineRects(words.map((w) => fromOcrBbox(w.bbox))), provenance: { wordIndexes } };
 };
 
@@ -79,9 +81,11 @@ type Item = {
   pointer: string;
   value: unknown;
   categories: string[];
-  expect: "cite" | "context-only" | "empty" | "discrepancy";
+  expect: "cite" | "context-only" | "empty";
   minAcceptableMatches?: number;
+  minRequiredContextMatches?: number;
   acceptable: Evidence[];
+  requiredContext?: Evidence[];
   secondary: Evidence[];
   forbidden: Evidence[];
 };
@@ -425,17 +429,29 @@ const main = async () => {
     }
 
     if (item.expect === "cite" && item.acceptable.length === 0) fail(`${ctx}: expect=cite needs acceptable evidence`);
-    if (item.expect === "discrepancy" && item.acceptable.length === 0) fail(`${ctx}: expect=discrepancy needs acceptable evidence`);
     if (item.expect === "cite" && (item.minAcceptableMatches ?? 1) > item.acceptable.length) {
       fail(`${ctx}: minAcceptableMatches exceeds acceptable count`);
     }
     if (item.minAcceptableMatches !== undefined && item.expect !== "cite") fail(`${ctx}: minAcceptableMatches only applies to expect=cite`);
+    const requiredContext = item.requiredContext ?? [];
+    if (item.minRequiredContextMatches !== undefined && item.expect !== "cite") {
+      fail(`${ctx}: minRequiredContextMatches only applies to expect=cite`);
+    }
+    if (item.minRequiredContextMatches !== undefined && requiredContext.length === 0) {
+      fail(`${ctx}: minRequiredContextMatches requires requiredContext evidence`);
+    }
+    if ((item.minRequiredContextMatches ?? (requiredContext.length ? 1 : 0)) > requiredContext.length) {
+      fail(`${ctx}: minRequiredContextMatches exceeds requiredContext count`);
+    }
+    if (requiredContext.some((e) => e.anchors.some((a) => a.role !== "context"))) {
+      fail(`${ctx}: every requiredContext anchor must have role=context`);
+    }
     if (item.expect === "empty" && item.acceptable.some((e) => e.anchors.some(isValueRole))) {
       fail(`${ctx}: expect=empty but an acceptable anchor has role value`);
     }
 
-    for (const bucket of ["acceptable", "secondary", "forbidden"] as const) {
-      for (const [ei, ev] of item[bucket].entries()) {
+    for (const bucket of ["acceptable", "requiredContext", "secondary", "forbidden"] as const) {
+      for (const [ei, ev] of (item[bucket] ?? []).entries()) {
         evidenceCount++;
         anchorCount += ev.anchors.length;
         await checkEvidence(`${ctx} ${bucket}[${ei}] "${ev.label.slice(0, 50)}"`, caseDir, ev);

@@ -208,7 +208,14 @@ function describe(a: Anchor): string {
 
 /** Does `quote` plausibly support result `value`? */
 export function valueSupported(value: unknown, quote: string): boolean {
-  if (typeof value === "boolean") return (quote.trim() !== "") === value; // presence field
+  if (typeof value === "boolean") {
+    // A literal boolean in the source (JSON true/false, "Yes"/"No", "X" checkbox) supports the value directly…
+    const q = quote.trim().toLowerCase();
+    if (/^(true|yes|y|x|✓|✔|☒)$/.test(q)) return value === true;
+    if (/^(false|no|n|☐)$/.test(q)) return value === false;
+    // …otherwise the field is a presence check: populated → true, empty → false.
+    return (q !== "") === value;
+  }
   if (value === null || value === undefined) return false;
   const vd = datesIn(String(value));
   if (vd.size > 0) {
@@ -403,7 +410,7 @@ class SourceContext {
 
   private async resolvePageRegion(a: PageRegionAnchor): Promise<string> {
     const chars = await this.chars(a.file, a.page);
-    const inside = (r: Rect, c: PlacedChar) =>
+    const inside = (r: Rect, c: { cx: number; cy: number }) =>
       c.cx >= r.left && c.cx <= r.left + r.width && c.cy >= r.top && c.cy <= r.top + r.height;
     const picked: PlacedChar[] = [];
     for (let i = 0; i < chars.length; i++) {
@@ -417,6 +424,35 @@ class SourceContext {
       if (i > 0 && picked[i].order !== picked[i - 1].order + 1) s += " ";
       s += picked[i].ch;
     }
-    return s.replace(/\s+/g, " ").trim();
+    const out = s.replace(/\s+/g, " ").trim();
+    if (out) return out;
+    // Scanned pages (no text layer) or glyphs pdf.js places outside the OCR box:
+    // fall back to the OCR artifact's words, which is where the boxes came from.
+    return this.resolveFromOcr(a, inside);
+  }
+
+  private ocrWords = new Map<string, Promise<Array<{ text: string; page: number; cx: number; cy: number }> | null>>();
+
+  private async resolveFromOcr(a: PageRegionAnchor, inside: (r: Rect, c: { cx: number; cy: number }) => boolean): Promise<string> {
+    const ocrName = a.provenance?.ocrFile ?? a.file.replace(/\.pdf$/i, "-ocr.json");
+    let p = this.ocrWords.get(ocrName);
+    if (!p) {
+      p = this.text(ocrName).then(
+        (t) => {
+          const words = (JSON.parse(t)?.ocr?.words ?? []) as Array<{ text: string; bbox: Rect & { page: number } }>;
+          return words.map((w) => ({ text: w.text, page: w.bbox.page, cx: w.bbox.left + w.bbox.width / 2, cy: w.bbox.top + w.bbox.height / 2 }));
+        },
+        () => null,
+      );
+      this.ocrWords.set(ocrName, p);
+    }
+    const words = await p;
+    if (!words) return "";
+    return words
+      .filter((w) => w.page === a.page && a.boxes.some((r) => inside(r, w)))
+      .map((w) => w.text)
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 }

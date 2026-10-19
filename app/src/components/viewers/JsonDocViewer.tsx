@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { fetchJson } from "../../api";
 import { escapeToken } from "../../lib/pointer";
-import type { Anchor } from "../../types";
+import type { AnchorRef } from "../../types";
+import { findOccurrences, type DocumentSearchProps } from "./search";
 
-interface Props {
+interface Props extends DocumentSearchProps {
   caseId: string;
   file: string;
-  anchors: { anchor: Anchor; index: number }[];
+  anchors: AnchorRef[];
   activeIndex: number;
 }
 
@@ -14,8 +15,18 @@ interface Highlight {
   pointer: string;
   index: number;
   role: string;
+  tone?: string;
   span?: { start: number; end: number };
 }
+
+interface SearchMatch {
+  pointer: string;
+  start: number;
+  end: number;
+  index: number;
+}
+
+const toneClass = (h: Highlight) => (h.tone ? `tone-${h.tone}` : "");
 
 const TRUNCATE = 400;
 const SPAN_WINDOW = 1500;
@@ -25,7 +36,7 @@ const SPAN_WINDOW = 1500;
  * text-span anchors with a `pointer` highlight a character range inside that string.
  * Giant strings (e.g. base64 attachments in email exports) are truncated unless cited.
  */
-export function JsonDocViewer({ caseId, file, anchors, activeIndex }: Props) {
+export function JsonDocViewer({ caseId, file, anchors, activeIndex, searchQuery, activeSearchIndex, onSearchCount }: Props) {
   const [doc, setDoc] = useState<unknown>(undefined);
   const [err, setErr] = useState<string | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -44,14 +55,19 @@ export function JsonDocViewer({ caseId, file, anchors, activeIndex }: Props) {
 
   const highlights: Highlight[] = useMemo(
     () =>
-      anchors.flatMap(({ anchor, index }) => {
-        if (anchor.kind === "json-pointer") return [{ pointer: anchor.pointer, index, role: anchor.role ?? "value" }];
+      anchors.flatMap(({ anchor, index, tone }) => {
+        if (anchor.kind === "json-pointer") return [{ pointer: anchor.pointer, index, role: anchor.role ?? "value", tone }];
         if (anchor.kind === "text-span" && anchor.pointer !== undefined)
-          return [{ pointer: anchor.pointer, index, role: anchor.role ?? "value", span: { start: anchor.start, end: anchor.end } }];
+          return [{ pointer: anchor.pointer, index, role: anchor.role ?? "value", tone, span: { start: anchor.start, end: anchor.end } }];
         return [];
       }),
     [anchors],
   );
+  const searchMatches = useMemo(() => (doc === undefined ? [] : collectSearchMatches(doc, searchQuery)), [doc, searchQuery]);
+
+  useEffect(() => {
+    onSearchCount(searchMatches.length);
+  }, [searchMatches.length, onSearchCount]);
 
   // Every prefix of a highlighted pointer must be expanded.
   const forceOpen = useMemo(() => {
@@ -60,21 +76,35 @@ export function JsonDocViewer({ caseId, file, anchors, activeIndex }: Props) {
       const parts = h.pointer.split("/");
       for (let i = 1; i < parts.length; i++) s.add(parts.slice(0, i).join("/"));
     }
+    for (const match of searchMatches) {
+      const parts = match.pointer.split("/");
+      for (let i = 1; i < parts.length; i++) s.add(parts.slice(0, i).join("/"));
+    }
     s.add("");
     return s;
-  }, [highlights]);
+  }, [highlights, searchMatches]);
 
   useEffect(() => {
-    const el = rootRef.current?.querySelector<HTMLElement>(".hl.active");
+    const el = rootRef.current?.querySelector<HTMLElement>(".search-hit.current, .hl.active");
     el?.scrollIntoView({ block: "center" });
-  }, [doc, activeIndex, highlights]);
+  }, [doc, activeIndex, highlights, activeSearchIndex, searchMatches]);
 
   if (err) return <div className="viewer-empty error">{err}</div>;
   if (doc === undefined) return <div className="viewer-empty">Loading {file}…</div>;
 
   return (
     <div className="jsondoc" ref={rootRef}>
-      <Node value={doc} pointer="" depth={0} highlights={highlights} forceOpen={forceOpen} activeIndex={activeIndex} last />
+      <Node
+        value={doc}
+        pointer=""
+        depth={0}
+        highlights={highlights}
+        forceOpen={forceOpen}
+        activeIndex={activeIndex}
+        searchMatches={searchMatches}
+        activeSearchIndex={activeSearchIndex}
+        last
+      />
     </div>
   );
 }
@@ -86,11 +116,15 @@ function Node(p: {
   highlights: Highlight[];
   forceOpen: Set<string>;
   activeIndex: number;
+  searchMatches: SearchMatch[];
+  activeSearchIndex: number;
   keyName?: string;
   last: boolean;
 }) {
   const { value, pointer } = p;
-  const hit = p.highlights.find((h) => h.pointer === pointer);
+  // Prefer the active highlight when several anchors point at the same node.
+  const hits = p.highlights.filter((h) => h.pointer === pointer);
+  const hit = hits.find((h) => h.index === p.activeIndex) ?? hits[0];
   const [open, setOpen] = useState(p.depth < 1 || p.forceOpen.has(pointer));
   useEffect(() => {
     if (p.forceOpen.has(pointer)) setOpen(true);
@@ -98,7 +132,7 @@ function Node(p: {
 
   const comma = p.last ? "" : ",";
   const keyEl = p.keyName !== undefined ? <span className="k">{JSON.stringify(p.keyName)}: </span> : null;
-  const wholeClass = hit && !hit.span ? `hl role-${hit.role} ${hit.index === p.activeIndex ? "active" : ""}` : "";
+  const wholeClass = hit && !hit.span ? `hl role-${hit.role} ${toneClass(hit)} ${hit.index === p.activeIndex ? "active" : ""}` : "";
 
   if (value !== null && typeof value === "object") {
     const isArr = Array.isArray(value);
@@ -140,6 +174,8 @@ function Node(p: {
                 highlights={p.highlights}
                 forceOpen={p.forceOpen}
                 activeIndex={p.activeIndex}
+                searchMatches={p.searchMatches}
+                activeSearchIndex={p.activeSearchIndex}
                 keyName={isArr ? undefined : k}
                 last={i === entries.length - 1}
               />
@@ -158,7 +194,14 @@ function Node(p: {
     return (
       <div className="jl" style={{ ["--d" as string]: p.depth }}>
         {keyEl}
-        <StringValue value={value} hit={hit} activeIndex={p.activeIndex} wholeClass={wholeClass} />
+        <StringValue
+          value={value}
+          hit={hit}
+          activeIndex={p.activeIndex}
+          wholeClass={wholeClass}
+          searchMatches={p.searchMatches.filter((match) => match.pointer === pointer)}
+          activeSearchIndex={p.activeSearchIndex}
+        />
         {comma}
       </div>
     );
@@ -167,15 +210,48 @@ function Node(p: {
   return (
     <div className="jl" style={{ ["--d" as string]: p.depth }}>
       {keyEl}
-      <span className={`prim t-${value === null ? "null" : typeof value} ${wholeClass}`}>{JSON.stringify(value)}</span>
+      <PrimitiveValue
+        value={JSON.stringify(value)}
+        className={`prim t-${value === null ? "null" : typeof value} ${wholeClass}`}
+        searchMatches={p.searchMatches.filter((match) => match.pointer === pointer)}
+        activeSearchIndex={p.activeSearchIndex}
+      />
       {comma}
     </div>
   );
 }
 
-function StringValue({ value, hit, activeIndex, wholeClass }: { value: string; hit?: Highlight; activeIndex: number; wholeClass: string }) {
+function StringValue({
+  value,
+  hit,
+  activeIndex,
+  wholeClass,
+  searchMatches,
+  activeSearchIndex,
+}: {
+  value: string;
+  hit?: Highlight;
+  activeIndex: number;
+  wholeClass: string;
+  searchMatches: SearchMatch[];
+  activeSearchIndex: number;
+}) {
   const [expanded, setExpanded] = useState(false);
   const span = hit?.span;
+
+  if (searchMatches.length) {
+    const active = searchMatches.find((match) => match.index === activeSearchIndex) ?? searchMatches[0];
+    const windowed = value.length > SPAN_WINDOW * 2 && !expanded;
+    const from = windowed ? Math.max(0, active.start - SPAN_WINDOW) : 0;
+    const to = windowed ? Math.min(value.length, active.end + SPAN_WINDOW) : value.length;
+    return (
+      <span className={`str ${wholeClass}`}>
+        "{from > 0 && <span className="ellipsis" onClick={() => setExpanded(true)}>…{from} chars…</span>}
+        <SearchText value={value} from={from} to={to} matches={searchMatches} activeSearchIndex={activeSearchIndex} />
+        {to < value.length && <span className="ellipsis" onClick={() => setExpanded(true)}>…{value.length - to} chars…</span>}"
+      </span>
+    );
+  }
 
   if (span) {
     // Show the span with context; window very long strings.
@@ -189,7 +265,7 @@ function StringValue({ value, hit, activeIndex, wholeClass }: { value: string; h
       <span className="str">
         "{from > 0 && <span className="ellipsis" onClick={() => setExpanded(true)}>…{from} chars…</span>}
         <span className="raw">{escapeVisible(value.slice(from, s))}</span>
-        <mark className={`hl role-${hit!.role} ${active ? "active" : ""}`} title={`[${span.start}, ${span.end})`}>
+        <mark className={`hl role-${hit!.role} ${toneClass(hit!)} ${active ? "active" : ""}`} title={`[${span.start}, ${span.end})`}>
           {escapeVisible(value.slice(s, e))}
         </mark>
         <span className="raw">{escapeVisible(value.slice(e, to))}</span>
@@ -210,6 +286,72 @@ function StringValue({ value, hit, activeIndex, wholeClass }: { value: string; h
     );
   }
   return <span className={`str ${wholeClass}`}>"{<span className="raw">{escapeVisible(value)}</span>}"</span>;
+}
+
+function PrimitiveValue({
+  value,
+  className,
+  searchMatches,
+  activeSearchIndex,
+}: {
+  value: string;
+  className: string;
+  searchMatches: SearchMatch[];
+  activeSearchIndex: number;
+}) {
+  return (
+    <span className={className}>
+      {searchMatches.length ? (
+        <SearchText value={value} from={0} to={value.length} matches={searchMatches} activeSearchIndex={activeSearchIndex} />
+      ) : value}
+    </span>
+  );
+}
+
+function SearchText({
+  value,
+  from,
+  to,
+  matches,
+  activeSearchIndex,
+}: {
+  value: string;
+  from: number;
+  to: number;
+  matches: SearchMatch[];
+  activeSearchIndex: number;
+}) {
+  const visible = matches.filter((match) => match.end > from && match.start < to);
+  const parts: React.ReactNode[] = [];
+  let cursor = from;
+  visible.forEach((match) => {
+    if (match.start > cursor) parts.push(<span key={`t-${cursor}`} className="raw">{escapeVisible(value.slice(cursor, match.start))}</span>);
+    parts.push(
+      <mark key={`m-${match.index}`} className={`search-hit ${match.index === activeSearchIndex ? "current" : ""}`}>
+        {escapeVisible(value.slice(match.start, match.end))}
+      </mark>,
+    );
+    cursor = match.end;
+  });
+  if (cursor < to) parts.push(<span key={`t-${cursor}`} className="raw">{escapeVisible(value.slice(cursor, to))}</span>);
+  return <>{parts}</>;
+}
+
+function collectSearchMatches(doc: unknown, query: string): SearchMatch[] {
+  const matches: SearchMatch[] = [];
+  const visit = (value: unknown, pointer: string) => {
+    if (value !== null && typeof value === "object") {
+      const entries = Array.isArray(value) ? value.map((item, index) => [String(index), item] as const) : Object.entries(value as Record<string, unknown>);
+      entries.forEach(([key, child]) => visit(child, `${pointer}/${escapeToken(key)}`));
+      return;
+    }
+    const text = typeof value === "string" ? value : JSON.stringify(value) ?? String(value);
+    findOccurrences(text, query).forEach(({ start, end }) => {
+      matches.push({ pointer, start, end, index: matches.length });
+    });
+  };
+  visit(doc, "");
+  return matches;
 }
 
 /** Keep newlines visible as real line breaks but show other control chars escaped. */

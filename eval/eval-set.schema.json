@@ -34,7 +34,7 @@
   "$defs": {
     "expect": {
       "type": "string",
-      "enum": ["cite", "context-only", "empty", "discrepancy"]
+      "enum": ["cite", "context-only", "empty"]
     },
     "jsonPointer": {
       "type": "string",
@@ -64,10 +64,22 @@
           "default": 1,
           "description": "For `expect: cite`, how many distinct `acceptable` entries must be matched to pass (used for multi-citation items)."
         },
+        "minRequiredContextMatches": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "When `requiredContext` is present, how many distinct context entries must be matched by produced anchors whose role is `context`."
+        },
         "acceptable": {
           "type": "array",
           "items": { "$ref": "#/$defs/Evidence" },
-          "description": "Ground-truth evidence. For `cite`: any-of (subject to minAcceptableMatches). For `context-only`/`empty`: tolerated context. For `discrepancy`: the evidence that contradicts the result."
+          "description": "Ground-truth evidence. For `cite`: any-of (subject to minAcceptableMatches). For `context-only`/`empty`: tolerated context."
+        },
+        "requiredContext": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Evidence" },
+          "description": "Context evidence required in addition to an acceptable value match. Its anchors must use role `context`; produced value/label anchors do not satisfy this requirement."
         },
         "secondary": {
           "type": "array",
@@ -93,7 +105,7 @@
           "type": "array",
           "minItems": 1,
           "items": { "$ref": "../schema/citations.schema.json#/$defs/Anchor" },
-          "description": "One logical piece of evidence, possibly several anchors (label + value, or two spans). A produced citation matches this evidence if it matches at least one of its non-label, non-context anchors (or any anchor, when all anchors are label/context)."
+          "description": "One logical piece of evidence, possibly several anchors (label + value, or two spans). A produced citation matches this evidence if it matches a value-role anchor (or any anchor, when every anchor is label/context). When label or context anchors are present, the same citation must also cover one of them: the words around the value that identify the field."
         }
       }
     }

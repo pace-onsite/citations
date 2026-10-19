@@ -4,12 +4,13 @@ import { CitationPanel } from "./components/CitationPanel";
 import { FieldList } from "./components/FieldList";
 import { Header } from "./components/Header";
 import { JsonView } from "./components/JsonView";
+import { RawResultView } from "./components/RawResultView";
 import { SourceViewer } from "./components/SourceViewer";
 import { flattenResult, isLeaf } from "./lib/pointer";
 import { compileSchema, validateCitation, validateSchema, type CitationReport, type SchemaError } from "./lib/validate";
-import type { Anchor, CaseDetail, CaseSummary, Citation, CitationSet, CitationsResponse } from "./types";
+import type { Anchor, AnchorRef, CaseDetail, CaseSummary, Citation, CitationSet, CitationsResponse, FieldTrace, PageRegionAnchor, RunMetrics } from "./types";
 
-export type RightTab = "review" | "json";
+export type RightTab = "review" | "result" | "json";
 
 export interface Selection {
   pointer: string | null;
@@ -34,6 +35,12 @@ export function App() {
   const [validating, setValidating] = useState(false);
   const [tab, setTab] = useState<RightTab>("review");
   const [sel, setSel] = useState<Selection>({ pointer: null, citationId: null, anchorIndex: 0, file: null, page: 1 });
+  // ---- citation loop (agent) state ----
+  const [traces, setTraces] = useState<Record<string, FieldTrace>>({});
+  const [runMetrics, setRunMetrics] = useState<RunMetrics | null>(null);
+  /** null = idle; "all" = whole case; otherwise the pointer being searched. */
+  const [citing, setCiting] = useState<null | "all" | string>(null);
+  const [llmStatus, setLlmStatus] = useState<{ configured: boolean; model: string } | null>(null);
 
   // ---- bootstrap -----------------------------------------------------------
   useEffect(() => {
@@ -41,6 +48,7 @@ export function App() {
       compileSchema(s);
       setSchemaReady(true);
     }).catch((e) => setError(String(e)));
+    api.citeStatus().then(setLlmStatus).catch(() => setLlmStatus({ configured: false, model: "" }));
     api.cases().then((cs) => {
       setCases(cs);
       const params = new URLSearchParams(location.search);
@@ -60,6 +68,9 @@ export function App() {
     setReports({});
     setDirty(false);
     setError(null);
+    setTraces({});
+    setRunMetrics(null);
+    setCiting(null);
     const url = new URL(location.href);
     url.searchParams.set("case", caseId);
     history.replaceState(null, "", url);
@@ -157,6 +168,65 @@ export function App() {
     }
   }, [loaded]);
 
+  /**
+   * Run the citation loop (whole case, or one field) and merge the proposals:
+   * auto citations for the processed pointers are replaced, manual ones kept.
+   * The per-field traces are what the Review panel shows as "agent reasoning".
+   */
+  const generate = useCallback(
+    async (pointers?: string[]) => {
+      if (!caseId || !detail || citing) return;
+      setCiting(pointers?.length === 1 ? pointers[0] : "all");
+      setError(null);
+      try {
+        const r = await api.cite(caseId, { pointers, llm: true });
+        setTraces((prev) => {
+          const next = pointers ? { ...prev } : {};
+          for (const t of r.traces) next[t.pointer] = t;
+          return next;
+        });
+        setRunMetrics((prev) => (pointers && prev ? { ...prev, ...r.metrics, fields: prev.fields, processed: prev.processed } : r.metrics));
+        setSet((prev) => {
+          const base: CitationSet = prev ?? { schemaVersion: "citations/v1", caseId, citations: {} };
+          const citations = { ...base.citations };
+          for (const [ptr, list] of Object.entries(r.set.citations)) {
+            const manual = (citations[ptr] ?? []).filter((c) => c.source === "manual");
+            citations[ptr] = [...manual, ...list];
+          }
+          return { ...base, generatedAt: r.set.generatedAt, citations };
+        });
+        setDirty(true);
+        // Validate the new citations in the browser like loaded ones.
+        const jobs: Promise<CitationReport>[] = [];
+        for (const [ptr, list] of Object.entries(r.set.citations)) for (const c of list) jobs.push(validateCitation(caseId, ptr, c, detail));
+        const rs = await Promise.allSettled(jobs);
+        setReports((prev) => {
+          const next = { ...prev };
+          rs.forEach((x) => { if (x.status === "fulfilled") next[x.value.citationId] = x.value; });
+          return next;
+        });
+        // Keep the selection on something that exists; jump to the new evidence for a single-field run.
+        if (pointers?.length === 1) {
+          const first = r.set.citations[pointers[0]]?.[0];
+          const a = first?.anchors[0];
+          setSel((s) => ({ ...s, pointer: pointers[0], citationId: first?.id ?? null, anchorIndex: 0, file: a?.file ?? s.file, page: a?.kind === "page-region" ? a.page : s.page }));
+        } else {
+          setSel((s) => {
+            const list = s.pointer ? r.set.citations[s.pointer] : undefined;
+            const first = list?.[0];
+            const a = first?.anchors[0];
+            return first ? { ...s, citationId: first.id, anchorIndex: 0, file: a?.file ?? s.file, page: a?.kind === "page-region" ? a.page : s.page } : s;
+          });
+        }
+      } catch (e) {
+        setError(String(e));
+      } finally {
+        setCiting(null);
+      }
+    },
+    [caseId, detail, citing],
+  );
+
   const selectField = useCallback(
     (pointer: string) => {
       const list = set?.citations[pointer] ?? [];
@@ -213,6 +283,34 @@ export function App() {
     return set.citations[sel.pointer]?.find((c) => c.id === sel.citationId) ?? null;
   }, [set, sel.pointer, sel.citationId]);
 
+  const viewerAnchors: AnchorRef[] = useMemo(
+    () => (selectedCitation?.anchors ?? []).map((anchor, index) => ({ anchor, index })),
+    [selectedCitation],
+  );
+
+  // Faint outlines for every other citation's boxes, for context.
+  const ghosts: PageRegionAnchor[] = useMemo(() => {
+    if (!set) return [];
+    const out: PageRegionAnchor[] = [];
+    for (const list of Object.values(set.citations)) {
+      for (const c of list) {
+        if (c.id === selectedCitation?.id) continue;
+        for (const a of c.anchors) if (a.kind === "page-region") out.push(a);
+      }
+    }
+    return out;
+  }, [set, selectedCitation?.id]);
+
+  const filesWithAnchors = useMemo(() => {
+    const s = new Set<string>();
+    if (set && sel.pointer) {
+      for (const citation of set.citations[sel.pointer] ?? []) {
+        for (const anchor of citation.anchors) s.add(anchor.file);
+      }
+    }
+    return s;
+  }, [set, sel.pointer]);
+
   return (
     <div className="app">
       <Header
@@ -230,11 +328,15 @@ export function App() {
         saving={saving}
         onSave={save}
         onRevert={revert}
+        runMetrics={runMetrics}
+        citing={citing}
+        llmStatus={llmStatus}
+        onGenerate={() => generate()}
       />
       {error && (
         <div className="banner error" role="alert">
           {error}
-          <button className="link" onClick={() => setError(null)}>dismiss</button>
+          <button type="button" className="link" onClick={() => setError(null)}>dismiss</button>
         </div>
       )}
       {detail && set ? (
@@ -249,20 +351,25 @@ export function App() {
           <SourceViewer
             caseId={detail.id}
             detail={detail}
-            set={set}
             file={sel.file}
             page={sel.page}
             onPage={setPage}
             onBrowse={browseFile}
-            selectedCitation={selectedCitation}
-            activeAnchorIndex={sel.anchorIndex}
+            anchors={viewerAnchors}
+            activeIndex={sel.anchorIndex}
+            ghosts={ghosts}
+            filesWithAnchors={filesWithAnchors}
+            emptyNote={selectedCitation ? "selected citation has no anchors in this file" : undefined}
           />
           <aside className="right">
             <div className="tabs" role="tablist">
-              <button role="tab" aria-selected={tab === "review"} className={tab === "review" ? "on" : ""} onClick={() => setTab("review")}>
+              <button type="button" role="tab" aria-selected={tab === "review"} className={tab === "review" ? "on" : ""} onClick={() => setTab("review")}>
                 Review
               </button>
-              <button role="tab" aria-selected={tab === "json"} className={tab === "json" ? "on" : ""} onClick={() => setTab("json")}>
+              <button type="button" role="tab" aria-selected={tab === "result"} className={tab === "result" ? "on" : ""} onClick={() => setTab("result")}>
+                result.json
+              </button>
+              <button type="button" role="tab" aria-selected={tab === "json"} className={tab === "json" ? "on" : ""} onClick={() => setTab("json")}>
                 citations.json
                 {schemaErrors.length > 0 && <span className="pill err">{schemaErrors.length}</span>}
               </button>
@@ -278,7 +385,13 @@ export function App() {
                 schemaErrors={schemaErrors}
                 onSelectCitation={selectCitation}
                 onNote={(ptr, id, note) => updateCitation(ptr, id, { note })}
+                trace={sel.pointer ? traces[sel.pointer] : undefined}
+                citing={citing}
+                onFindEvidence={(ptr) => generate([ptr])}
+                onBrowse={(file, page) => setSel((s) => ({ ...s, file, page: page ?? (file === s.file ? s.page : 1) }))}
               />
+            ) : tab === "result" ? (
+              <RawResultView key={detail.id} caseId={detail.id} raw={detail.resultRaw} />
             ) : (
               <JsonView set={set} loaded={loaded} selectedPointer={sel.pointer} schemaErrors={schemaErrors} onSelectPointer={selectField} />
             )}

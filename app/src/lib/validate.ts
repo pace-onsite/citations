@@ -135,6 +135,9 @@ export function normalizeLoose(s: string): string {
   return s.toLowerCase().replace(/[^a-z0-9/.\-]/g, "");
 }
 
+/** The better (less severe) of two comparison outcomes. */
+const worstOfBest = (a: Level, b: Level): Level => (levelRank[a] <= levelRank[b] ? a : b);
+
 function compareText(found: string, expected: string): Level {
   if (found === expected) return "ok";
   if (found.trim() === expected.trim()) return "ok";
@@ -182,16 +185,18 @@ async function checkPageRegion(
       findings.push({ level: "warn", code: "missing-ocr", message: `provenance.ocrFile ${prov.ocrFile} not in case`, anchorIndex: i });
     } else {
       try {
-        const ocr = (await fetchJson(caseId, prov.ocrFile)) as { ocr?: { words?: Array<{ text: string; bbox: { page: number; left: number; top: number; width: number; height: number } }> } };
+        const ocr = (await fetchJson(caseId, prov.ocrFile)) as { ocr?: { words?: Array<{ text: string; bbox: { page: number; original_page?: number; left: number; top: number; width: number; height: number } }> } };
         const words = ocr.ocr?.words ?? [];
+        const pdfPageOf = (b: { page: number; original_page?: number }) =>
+          Number.isInteger(b.original_page) && b.original_page! >= 1 ? b.original_page! : b.page;
         const picked = prov.wordIndexes.map((w) => words[w]);
         if (picked.some((w) => !w)) {
           findings.push({ level: "error", code: "bad-word-index", message: `provenance.wordIndexes reference words that do not exist in ${prov.ocrFile}`, anchorIndex: i });
         } else {
           text = picked.map((w) => w.text).join(" ");
-          const wrongPage = picked.filter((w) => w.bbox.page !== a.page);
+          const wrongPage = picked.filter((w) => pdfPageOf(w.bbox) !== a.page);
           if (wrongPage.length) {
-            findings.push({ level: "error", code: "word-page-mismatch", message: `OCR words are on page ${wrongPage[0].bbox.page}, anchor says page ${a.page}`, anchorIndex: i });
+            findings.push({ level: "error", code: "word-page-mismatch", message: `OCR words are on PDF page ${pdfPageOf(wrongPage[0].bbox)}, anchor says page ${a.page}`, anchorIndex: i });
           }
           // Every box should overlap at least one of the provenance words.
           for (const [bi, b] of a.boxes.entries()) {
@@ -277,7 +282,12 @@ async function checkTextSpan(
   const text = hay.slice(a.start, a.end);
   if (citation.quote !== undefined && isValueRole(a)) {
     const lvl = compareText(text, citation.quote);
-    if (lvl === "error") findings.push({ level: "error", code: "quote-mismatch", message: describeMismatch(text, citation.quote), anchorIndex: i });
+    const multi = citation.anchors.filter(isValueRole).length > 1;
+    const part = lvl === "error" && multi && text.trim().length > 0 && normalizeLoose(citation.quote).includes(normalizeLoose(text));
+    if (part) {
+      // Multi-span citations write the quote as the pieces joined with " ... "; each span covers one piece.
+      findings.push({ level: "ok", code: "quote-partial", message: `span ${JSON.stringify(trunc(text))} is one piece of the quote`, anchorIndex: i });
+    } else if (lvl === "error") findings.push({ level: "error", code: "quote-mismatch", message: describeMismatch(text, citation.quote), anchorIndex: i });
     else if (lvl === "warn") findings.push({ level: "warn", code: "quote-normalized", message: `span text matches quote only after normalization`, anchorIndex: i });
     else findings.push({ level: "ok", code: "quote-verified", message: `span text equals quote`, anchorIndex: i });
   } else {
@@ -351,7 +361,8 @@ async function checkSheetRange(
     return { findings };
   }
   const isCsv = /\.csv$/i.test(a.file);
-  const cells: string[] = [];
+  const cells: string[] = []; // formatted text (what the grid shows)
+  const raw: string[] = []; // underlying values (what producers reading the workbook XML see)
   try {
     if (isCsv) {
       if (a.sheet) findings.push({ level: "warn", code: "csv-has-sheet", message: `sheet is set on a CSV anchor`, anchorIndex: i });
@@ -384,7 +395,8 @@ async function checkSheetRange(
             findings.push({ level: "error", code: "cell-missing", message: `cell ${XLSX.utils.encode_cell({ r: r - 1, c: c - 1 })} is empty in sheet ${a.sheet}`, anchorIndex: i });
             return { findings };
           }
-          cells.push(cell.w ?? String(cell.v ?? ""));
+          cells.push((cell.w ?? String(cell.v ?? "")).trim());
+          raw.push(cell.v instanceof Date ? cell.v.toISOString() : String(cell.v ?? ""));
         }
       }
     }
@@ -393,11 +405,17 @@ async function checkSheetRange(
     return { findings };
   }
   const text = cells.join(" | ");
+  const rawText = raw.join(" | ");
   if (citation.quote !== undefined && isValueRole(a)) {
-    const lvl = compareText(text, citation.quote);
-    if (lvl === "error") findings.push({ level: "error", code: "quote-mismatch", message: describeMismatch(text, citation.quote), anchorIndex: i });
-    else if (lvl === "warn") findings.push({ level: "warn", code: "quote-normalized", message: `cell text matches quote only after normalization`, anchorIndex: i });
-    else findings.push({ level: "ok", code: "quote-verified", message: `cell text equals quote`, anchorIndex: i });
+    // Either the formatted text or the raw value may be what the producer quoted ("$0.00" vs 0).
+    const lvl = worstOfBest(compareText(text, citation.quote), isCsv ? "error" : compareText(rawText, citation.quote));
+    const fragment = lvl === "error" && citation.quote.length >= 8 && normalizeLoose(text).includes(normalizeLoose(citation.quote));
+    if (fragment) {
+      // A cell is the smallest sheet-range unit, so quoting part of a long cell is legitimate — but flag it.
+      findings.push({ level: "warn", code: "quote-fragment", message: `quote is a fragment of a longer cell (${text.length} chars): ${JSON.stringify(trunc(text))}`, anchorIndex: i });
+    } else if (lvl === "error") findings.push({ level: "error", code: "quote-mismatch", message: describeMismatch(text, citation.quote), anchorIndex: i });
+    else if (lvl === "warn") findings.push({ level: "warn", code: "quote-normalized", message: `cell matches quote only after normalization`, anchorIndex: i });
+    else findings.push({ level: "ok", code: "quote-verified", message: isCsv || compareText(text, citation.quote) === "ok" ? `cell text equals quote` : `raw cell value equals quote (displays as ${JSON.stringify(text)})`, anchorIndex: i });
   } else {
     findings.push({ level: "ok", code: "cell-resolves", message: `cell resolves to ${JSON.stringify(trunc(text))}`, anchorIndex: i });
   }
@@ -415,7 +433,43 @@ export function quoteSupportsValue(quote: string | undefined, value: unknown): F
   if (q === v) return { level: "ok", code: "quote-equals-value", message: "quote equals the result value" };
   if (q.includes(v)) return { level: "ok", code: "quote-contains-value", message: "quote contains the result value" };
   if (typeof value === "number" && Number(q.replace(/[^0-9.\-]/g, "")) === value) return { level: "ok", code: "quote-numeric-match", message: "quote parses to the same number" };
+  const dv = parseDateLoose(String(value));
+  if (dv) {
+    const dq = datesIn(quote);
+    if (dq.includes(dv)) return { level: "ok", code: "quote-date-match", message: `quote contains the same date (${dv}) in a different format` };
+  }
+  if (typeof value === "string" && sameNameTokens(value, quote)) return { level: "ok", code: "quote-name-order", message: "quote is the same name in a different order" };
   return { level: "warn", code: "quote-indirect", message: "quote does not literally contain the value — verify the transformation" };
+}
+
+const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+const DATE_RE =
+  /\b(\d{4})-(\d{1,2})-(\d{1,2})(?:[T\s][\d:.]+Z?)?\b|\b(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4}|\d{2})\b|\b([A-Za-z]{3,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})\b|\b(\d{1,2})\s+([A-Za-z]{3,9})\.?,?\s+(\d{4})\b/g;
+
+/** Every date mentioned in `s`, normalized to YYYY-MM-DD (US month-first for numeric forms). */
+function datesIn(s: string): string[] {
+  const out: string[] = [];
+  for (const m of s.matchAll(DATE_RE)) {
+    let y: number, mo: number, d: number;
+    if (m[1]) [y, mo, d] = [+m[1], +m[2], +m[3]];
+    else if (m[4]) [mo, d, y] = [+m[4], +m[5], +m[6] < 100 ? 2000 + +m[6] : +m[6]];
+    else if (m[7]) [mo, d, y] = [MONTHS.indexOf(m[7].slice(0, 3).toLowerCase()) + 1, +m[8], +m[9]];
+    else [d, mo, y] = [+m[10], MONTHS.indexOf(m[11].slice(0, 3).toLowerCase()) + 1, +m[12]];
+    if (mo >= 1 && mo <= 12 && d >= 1 && d <= 31) out.push(`${y}-${String(mo).padStart(2, "0")}-${String(d).padStart(2, "0")}`);
+  }
+  return out;
+}
+
+function parseDateLoose(s: string): string | undefined {
+  const all = datesIn(s.trim());
+  return all.length === 1 && s.trim().replace(DATE_RE, "").trim().length === 0 ? all[0] : undefined;
+}
+
+/** "Hope, Jesse" ≈ "Jesse Hope": same word multiset, 2–4 tokens. */
+function sameNameTokens(a: string, b: string): boolean {
+  const tok = (s: string) => s.toLowerCase().split(/[^\p{L}'’.-]+/u).filter(Boolean).sort();
+  const ta = tok(a), tb = tok(b);
+  return ta.length >= 2 && ta.length <= 4 && ta.length === tb.length && ta.every((t, i) => t === tb[i]);
 }
 
 export async function validateCitation(

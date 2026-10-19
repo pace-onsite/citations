@@ -1,26 +1,39 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { PDFDocumentProxy, RenderTask } from "pdfjs-dist";
+import { Util, type PDFDocumentProxy, type RenderTask } from "pdfjs-dist";
 import { getPdf } from "../../lib/pdf";
-import type { PageRegionAnchor } from "../../types";
+import type { AnchorRef, PageRegionAnchor, Rect } from "../../types";
+import { findOccurrences, type DocumentSearchProps } from "./search";
 
-interface Props {
+interface Props extends DocumentSearchProps {
   caseId: string;
   file: string;
   page: number;
   onPage: (p: number) => void;
-  anchors: { anchor: PageRegionAnchor; index: number }[];
+  anchors: (AnchorRef & { anchor: PageRegionAnchor })[];
   activeIndex: number;
   ghosts: PageRegionAnchor[];
 }
 
 type Zoom = "fit" | number;
+type PdfTextItem = { str: string; transform: number[]; width: number; height: number };
 
 /**
  * Renders one PDF page to a canvas and overlays the citation boxes. Boxes are fractions
  * of the rendered page, so the overlay is positioned in percentages and stays correct at
  * any zoom and after pdf.js applies the page's intrinsic rotation.
  */
-export function PdfViewer({ caseId, file, page, onPage, anchors, activeIndex, ghosts }: Props) {
+export function PdfViewer({
+  caseId,
+  file,
+  page,
+  onPage,
+  anchors,
+  activeIndex,
+  ghosts,
+  searchQuery,
+  activeSearchIndex,
+  onSearchCount,
+}: Props) {
   const [doc, setDoc] = useState<PDFDocumentProxy | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [zoom, setZoom] = useState<Zoom>("fit");
@@ -30,6 +43,7 @@ export function PdfViewer({ caseId, file, page, onPage, anchors, activeIndex, gh
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [showGhosts, setShowGhosts] = useState(true);
+  const [searchMatches, setSearchMatches] = useState<{ page: number; box: Rect }[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -42,6 +56,68 @@ export function PdfViewer({ caseId, file, page, onPage, anchors, activeIndex, gh
       cancelled = true;
     };
   }, [caseId, file]);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!doc || !searchQuery.trim()) {
+      setSearchMatches([]);
+      return;
+    }
+    Promise.all(
+      Array.from({ length: doc.numPages }, async (_, index) => {
+        const pageNumber = index + 1;
+        const pdfPage = await doc.getPage(pageNumber);
+        const viewport = pdfPage.getViewport({ scale: 1 });
+        const content = await pdfPage.getTextContent();
+        const mapped: { start: number; end: number; box: Rect }[] = [];
+        let pageText = "";
+        content.items.forEach((raw) => {
+          if (!("str" in raw)) return;
+          const item = raw as PdfTextItem;
+          if (pageText) pageText += " ";
+          const start = pageText.length;
+          pageText += item.str;
+          const tx = Util.transform(viewport.transform, item.transform);
+          const height = Math.max(1, Math.hypot(tx[2], tx[3]) || item.height);
+          mapped.push({
+            start,
+            end: pageText.length,
+            box: {
+              left: Math.max(0, tx[4] / viewport.width),
+              top: Math.max(0, (tx[5] - height) / viewport.height),
+              width: Math.min(1, item.width / viewport.width),
+              height: Math.min(1, height / viewport.height),
+            },
+          });
+        });
+        return findOccurrences(pageText, searchQuery).flatMap((match) => {
+          const items = mapped.filter((item) => item.end > match.start && item.start < match.end);
+          if (!items.length) return [];
+          const left = Math.min(...items.map((item) => item.box.left));
+          const top = Math.min(...items.map((item) => item.box.top));
+          const right = Math.max(...items.map((item) => item.box.left + item.box.width));
+          const bottom = Math.max(...items.map((item) => item.box.top + item.box.height));
+          return [{ page: pageNumber, box: { left, top, width: right - left, height: bottom - top } }];
+        });
+      }),
+    ).then((matches) => {
+      if (!cancelled) setSearchMatches(matches.flat());
+    }).catch(() => {
+      if (!cancelled) setSearchMatches([]);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [doc, searchQuery]);
+
+  useEffect(() => {
+    onSearchCount(searchMatches.length);
+  }, [searchMatches.length, onSearchCount]);
+
+  const activeSearch = searchMatches[activeSearchIndex];
+  useEffect(() => {
+    if (activeSearch && activeSearch.page !== page) onPage(activeSearch.page);
+  }, [activeSearch, page, onPage]);
 
   useLayoutEffect(() => {
     const el = containerRef.current;
@@ -105,6 +181,9 @@ export function PdfViewer({ caseId, file, page, onPage, anchors, activeIndex, gh
   const shownPage = numPages ? Math.min(page, numPages) : page;
   const onPageBoxes = anchors.filter((a) => a.anchor.page === page);
   const ghostBoxes = showGhosts ? ghosts.filter((g) => g.page === page) : [];
+  const pageSearchMatches = searchMatches
+    .map((match, index) => ({ ...match, index }))
+    .filter((match) => match.page === page);
 
   return (
     <div className="pdf">
@@ -163,12 +242,26 @@ export function PdfViewer({ caseId, file, page, onPage, anchors, activeIndex, gh
                   />
                 )),
               )}
-              {onPageBoxes.map(({ anchor, index }) =>
+              {pageSearchMatches.map((match) => (
+                <div
+                  key={`search-${match.index}`}
+                  ref={match.index === activeSearchIndex ? activeRef : undefined}
+                  className={`search-hit pdf-search-hit ${match.index === activeSearchIndex ? "current" : ""}`}
+                  style={{
+                    left: `${match.box.left * 100}%`,
+                    top: `${match.box.top * 100}%`,
+                    width: `${match.box.width * 100}%`,
+                    height: `${match.box.height * 100}%`,
+                  }}
+                  title={`Search match ${match.index + 1}`}
+                />
+              ))}
+              {onPageBoxes.map(({ anchor, index, tone }) =>
                 anchor.boxes.map((b, bi) => (
                   <div
                     key={`${index}-${bi}`}
-                    ref={index === activeIndex && bi === 0 ? activeRef : undefined}
-                    className={`hl role-${anchor.role ?? "value"} ${index === activeIndex ? "active" : ""}`}
+                    ref={!activeSearch && index === activeIndex && bi === 0 ? activeRef : undefined}
+                    className={`hl role-${anchor.role ?? "value"} ${tone ? `tone-${tone}` : ""} ${index === activeIndex ? "active" : ""}`}
                     style={{ left: `${b.left * 100}%`, top: `${b.top * 100}%`, width: `${b.width * 100}%`, height: `${b.height * 100}%` }}
                     title={`anchor ${index} · box ${bi} · ${anchor.role ?? "value"}`}
                   />

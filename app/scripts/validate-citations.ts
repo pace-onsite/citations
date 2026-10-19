@@ -1,13 +1,12 @@
 /**
  * CLI: validate citation files against the schema and against the source files.
  *
- *   npm run validate:citations                 # every file in output/ and schema/examples/
- *   npm run validate:citations -- 01-claim-evidence-review ../output/foo.citations.json
+ *   npm run validate:citations                 # every test-cases/<id>/citations.json
+ *   npm run validate:citations -- 01-claim-evidence-review path/to/other.json
  *   npm run validate:citations -- --json       # machine-readable report on stdout
  *
- * Arguments are case ids (resolved to output/<id>.citations.json, falling back to
- * schema/examples/<id>.citations.json) or paths to citation files.
- * Exit code is 1 if any anchor has a problem or any file is schema-invalid.
+ * Arguments are case ids (resolved to test-cases/<id>/citations.json) or paths to
+ * citation files. Exit code is 1 if any anchor has a problem or any file is schema-invalid.
  */
 import * as fs from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -17,25 +16,18 @@ import { validateCitationSet, type AnchorCheck, type ValidationReport } from "..
 import type { CitationSet } from "../src/types.ts";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
-const outputDir = path.join(repoRoot, "output");
-const examplesDir = path.join(repoRoot, "schema", "examples");
+const casesDir = path.join(repoRoot, "test-cases");
+const citationsFile = (id: string) => path.join(casesDir, id, "citations.json");
 
 async function listTargets(args: string[]): Promise<string[]> {
   if (args.length === 0) {
-    const files: string[] = [];
-    for (const dir of [outputDir, examplesDir]) {
-      if (!existsSync(dir)) continue;
-      for (const f of await fs.readdir(dir)) if (f.endsWith(".citations.json")) files.push(path.join(dir, f));
-    }
-    return files.sort();
+    const ids = (await fs.readdir(casesDir, { withFileTypes: true })).filter((e) => e.isDirectory()).map((e) => e.name).sort();
+    return ids.map(citationsFile).filter((f) => existsSync(f));
   }
   return args.map((arg) => {
     if (existsSync(arg)) return path.resolve(arg);
-    for (const dir of [outputDir, examplesDir]) {
-      const f = path.join(dir, `${arg}.citations.json`);
-      if (existsSync(f)) return f;
-    }
-    throw new Error(`no citation file for ${JSON.stringify(arg)}`);
+    if (existsSync(citationsFile(arg))) return citationsFile(arg);
+    throw new Error(`no citation file for ${JSON.stringify(arg)} (expected ${path.relative(repoRoot, citationsFile(arg))})`);
   });
 }
 
@@ -69,7 +61,7 @@ async function main() {
   const asJson = args.includes("--json");
   const targets = await listTargets(args.filter((a) => a !== "--json"));
   if (targets.length === 0) {
-    console.error("no citation files found in output/ or schema/examples/");
+    console.error("no test-cases/<id>/citations.json files found");
     process.exit(2);
   }
   const schema = JSON.parse(await fs.readFile(path.join(repoRoot, "schema", "citations.schema.json"), "utf8")) as object;
