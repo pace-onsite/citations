@@ -10,15 +10,17 @@ import type { Plugin } from "vite";
  *   GET  /api/schema                     citations.schema.json
  *   GET  /api/cases                      case summaries
  *   GET  /api/cases/:id                  result, definition, source index, file listing
- *   GET  /api/cases/:id/citations        output/<id>.citations.json → schema/examples → empty
- *   PUT  /api/cases/:id/citations        writes output/<id>.citations.json
+ *   GET  /api/cases/:id/citations        test-cases/<id>/citations.json (empty set if absent)
+ *   PUT  /api/cases/:id/citations        writes test-cases/<id>/citations.json
  *   GET  /cases/:id/files/<name>         raw source file (pdf, json, csv, xlsx, ...)
+ *
+ * Everything for a case lives in its folder: result.json, result-definition.json,
+ * files/, and citations.json.
  */
 export function casesPlugin(repoRoot: string): Plugin {
   const casesDir = path.join(repoRoot, "test-cases");
-  const outputDir = path.join(repoRoot, "output");
-  const examplesDir = path.join(repoRoot, "schema", "examples");
   const schemaFile = path.join(repoRoot, "schema", "citations.schema.json");
+  const citationsFile = (id: string) => path.join(casesDir, id, "citations.json");
 
   const safeId = (id: string) => /^[A-Za-z0-9._-]+$/.test(id);
   const safeName = (name: string) => /^[A-Za-z0-9._ -]+$/.test(name) && !name.includes("..");
@@ -66,8 +68,7 @@ export function casesPlugin(repoRoot: string): Plugin {
           reviewType: meta.reviewType ?? null,
           resultType: meta.resultType ?? null,
           sourceFileCounts: meta.sourceFileCounts ?? null,
-          hasOutput: existsSync(path.join(outputDir, `${id}.citations.json`)),
-          hasExample: existsSync(path.join(examplesDir, `${id}.citations.json`)),
+          hasCitations: existsSync(citationsFile(id)),
         };
       }),
     );
@@ -95,17 +96,14 @@ export function casesPlugin(repoRoot: string): Plugin {
   }
 
   async function loadCitations(id: string) {
-    const outFile = path.join(outputDir, `${id}.citations.json`);
-    const exFile = path.join(examplesDir, `${id}.citations.json`);
-    if (existsSync(outFile)) {
-      return { origin: "output", path: path.relative(repoRoot, outFile), data: await readJson(outFile) };
-    }
-    if (existsSync(exFile)) {
-      return { origin: "example", path: path.relative(repoRoot, exFile), data: await readJson(exFile) };
+    const file = citationsFile(id);
+    const rel = path.relative(repoRoot, file);
+    if (existsSync(file)) {
+      return { origin: "case", path: rel, data: await readJson(file) };
     }
     return {
       origin: "none",
-      path: path.relative(repoRoot, outFile),
+      path: rel,
       data: { schemaVersion: "citations/v1", caseId: id, citations: {} },
     };
   }
@@ -145,10 +143,10 @@ export function casesPlugin(repoRoot: string): Plugin {
               } catch {
                 return json(res, 400, { error: "body is not JSON" });
               }
-              await fs.mkdir(outputDir, { recursive: true });
-              const outFile = path.join(outputDir, `${id}.citations.json`);
-              await fs.writeFile(outFile, JSON.stringify(parsed, null, 2) + "\n", "utf8");
-              return json(res, 200, { ok: true, path: path.relative(repoRoot, outFile) });
+              if (!existsSync(path.join(casesDir, id))) return json(res, 404, { error: "no such case" });
+              const file = citationsFile(id);
+              await fs.writeFile(file, JSON.stringify(parsed, null, 2) + "\n", "utf8");
+              return json(res, 200, { ok: true, path: path.relative(repoRoot, file) });
             }
           }
 

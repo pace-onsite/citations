@@ -77,8 +77,8 @@ export interface CaseSummary {
   reviewType: string | null;
   resultType: string | null;
   sourceFileCounts: Record<string, number> | null;
-  hasOutput: boolean;
-  hasExample: boolean;
+  /** test-cases/<id>/citations.json exists. */
+  hasCitations: boolean;
 }
 
 export interface SourceFile {
@@ -113,7 +113,9 @@ export interface CaseDetail {
 }
 
 export interface CitationsResponse {
-  origin: "output" | "example" | "none";
+  /** `case` = loaded from test-cases/<id>/citations.json; `none` = file absent, empty set in memory. */
+  origin: "case" | "none";
+  /** Repo-relative path of the citations file (where saves go). */
   path: string;
   data: CitationSet;
 }

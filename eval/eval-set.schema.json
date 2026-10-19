@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://citations.local/schema/citation-eval/v1",
+  "title": "CitationEvalSet",
+  "description": "Edge-case evaluation set for field-level citation generation. Each item names one JSON Pointer in a case's result.json, tags the edge cases it exercises, states the expected behaviour, and carries ground-truth evidence (anchors in citations/v1 shapes) split into acceptable / secondary / forbidden. Matching and scoring rules live in eval/README.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "expectations", "categories", "items"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "citation-eval/v1" },
+    "description": { "type": "string" },
+    "anchorSchema": {
+      "type": "string",
+      "description": "Reference to the Anchor definition the ground-truth anchors conform to."
+    },
+    "expectations": {
+      "type": "object",
+      "description": "Human-readable definition of each `expect` value and its pass condition.",
+      "propertyNames": { "$ref": "#/$defs/expect" },
+      "additionalProperties": { "type": "string" }
+    },
+    "categories": {
+      "type": "object",
+      "description": "Edge-case taxonomy. Every category used by an item must be declared here.",
+      "additionalProperties": { "type": "string" }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Item" }
+    }
+  },
+  "$defs": {
+    "expect": {
+      "type": "string",
+      "enum": ["cite", "context-only", "empty", "discrepancy"]
+    },
+    "jsonPointer": {
+      "type": "string",
+      "pattern": "^(/([^/~]|~0|~1)*)*$"
+    },
+    "Item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "caseId", "pointer", "value", "categories", "expect", "acceptable", "secondary", "forbidden"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique within the set. Convention: `<case-number>.<pointer with / -> .>`." },
+        "caseId": { "type": "string", "description": "Directory name under test-cases/." },
+        "pointer": { "$ref": "#/$defs/jsonPointer", "description": "RFC 6901 pointer into the case's result.json." },
+        "value": { "description": "The value at `pointer` in result.json, copied verbatim so the item is self-describing. The validator checks it still matches." },
+        "fieldType": { "type": "string", "description": "`type` from result-definition.json for this field (string, int, float, boolean, array, enum, ...)." },
+        "fieldDefinition": { "type": "string", "description": "Truncated `description` from result-definition.json. Included because several expectations (defaults, N/A rules, exclusions) follow directly from it." },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "Edge-case tags; each must be a key of the top-level `categories` map."
+        },
+        "expect": { "$ref": "#/$defs/expect" },
+        "minAcceptableMatches": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "For `expect: cite`, how many distinct `acceptable` entries must be matched to pass (used for multi-citation items)."
+        },
+        "acceptable": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Evidence" },
+          "description": "Ground-truth evidence. For `cite`: any-of (subject to minAcceptableMatches). For `context-only`/`empty`: tolerated context. For `discrepancy`: the evidence that contradicts the result."
+        },
+        "secondary": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Evidence" },
+          "description": "Evidence that is not wrong but not sufficient on its own (derived artifacts, over-wide boxes, partial support). Matching it is neither a pass nor a false positive."
+        },
+        "forbidden": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Evidence" },
+          "description": "Known distractors. Matching any of these is a false positive regardless of `expect`."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "anchors"],
+      "properties": {
+        "label": { "type": "string", "description": "Human-readable description of where this evidence is." },
+        "quote": { "type": "string", "description": "Verbatim source text under the value-role anchors (before normalization to the result format)." },
+        "anchors": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "../schema/citations.schema.json#/$defs/Anchor" },
+          "description": "One logical piece of evidence, possibly several anchors (label + value, or two spans). A produced citation matches this evidence if it matches at least one of its non-label, non-context anchors (or any anchor, when all anchors are label/context)."
+        }
+      }
+    }
+  }
+}

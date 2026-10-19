@@ -45,7 +45,7 @@ export function App() {
       setCases(cs);
       const params = new URLSearchParams(location.search);
       const wanted = params.get("case");
-      const first = cs.find((c) => c.id === wanted) ?? cs.find((c) => c.hasOutput || c.hasExample) ?? cs[0];
+      const first = cs.find((c) => c.id === wanted) ?? cs.find((c) => c.hasCitations) ?? cs[0];
       if (first) setCaseId(first.id);
     }).catch((e) => setError(String(e)));
   }, []);
@@ -146,8 +146,8 @@ export function App() {
     try {
       const r = await api.saveCitations(caseId, { ...set, generatedAt: set.generatedAt });
       setDirty(false);
-      setLoaded((prev) => (prev ? { ...prev, origin: "output", path: r.path } : prev));
-      setCases((cs) => cs.map((c) => (c.id === caseId ? { ...c, hasOutput: true } : c)));
+      setLoaded((prev) => (prev ? { ...prev, origin: "case", path: r.path } : prev));
+      setCases((cs) => cs.map((c) => (c.id === caseId ? { ...c, hasCitations: true } : c)));
     } catch (e) {
       setError(String(e));
     } finally {

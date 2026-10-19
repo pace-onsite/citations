@@ -76,7 +76,7 @@ export function Header(p: Props) {
           {p.cases.map((c) => (
             <option key={c.id} value={c.id}>
               {c.id}
-              {c.hasOutput ? "  ● reviewed" : c.hasExample ? "  ○ example" : "  · no citations"}
+              {c.hasCitations ? "  ● citations.json" : "  · no citations"}
             </option>
           ))}
         </select>
@@ -84,11 +84,12 @@ export function Header(p: Props) {
 
       {p.loaded && (
         <div className={`origin origin-${origin}`} title={p.loaded.path}>
-          {origin === "output" ? "output" : origin === "example" ? "schema/examples" : "empty set"}
+          {origin === "case" ? "citations file" : "no file yet — saving creates"}
           <code>{p.loaded.path}</code>
         </div>
       )}
 
+      <div className="header-right">
       <div className="metrics">
         <Metric label="coverage" value={`${Math.round(m.coverage * 100)}%`} hint={`${m.cited} of ${m.leaves} leaf fields have ≥1 citation`} />
         <Metric label="citations" value={m.total} hint={`${m.searchedEmpty} field${m.searchedEmpty === 1 ? "" : "s"} recorded as searched-nothing-found`} />
@@ -109,6 +110,7 @@ export function Header(p: Props) {
         <button className="primary" onClick={p.onSave} disabled={!p.dirty || p.saving || !p.set}>
           {p.saving ? "Saving…" : p.dirty ? "Save to output/" : "Saved"}
         </button>
+      </div>
       </div>
     </header>
   );

@@ -19,12 +19,29 @@ export interface SchemaError {
   pointer?: string;
 }
 
-let compiled: ReturnType<Ajv2020["compile"]> | null = null;
+type Validator = ReturnType<Ajv2020["compile"]>;
+let compiled: Validator | null = null;
+const anchorValidators = new Map<string, Validator>();
+
+const anchorDefByKind: Record<string, string> = {
+  "page-region": "PageRegionAnchor",
+  "text-span": "TextSpanAnchor",
+  "json-pointer": "JsonPointerAnchor",
+  "sheet-range": "SheetRangeAnchor",
+};
 
 export function compileSchema(schema: Record<string, unknown>) {
   const ajv = new Ajv2020({ allErrors: true, strict: false });
   addFormats(ajv);
   compiled = ajv.compile(schema);
+  // Per-kind validators so anchor errors can be reported against the branch the producer meant,
+  // instead of the union of all four oneOf branches.
+  const id = typeof schema.$id === "string" ? schema.$id : "";
+  anchorValidators.clear();
+  for (const [kind, def] of Object.entries(anchorDefByKind)) {
+    const v = ajv.getSchema(`${id}#/$defs/${def}`);
+    if (v) anchorValidators.set(kind, v as Validator);
+  }
 }
 
 function locateError(err: ErrorObject, set: CitationSet): Pick<SchemaError, "citationId" | "pointer"> {
@@ -37,21 +54,48 @@ function locateError(err: ErrorObject, set: CitationSet): Pick<SchemaError, "cit
   return { pointer, citationId: cit?.id };
 }
 
+const formatMessage = (e: ErrorObject, instancePath = e.instancePath) =>
+  `${instancePath || "/"} ${e.message ?? ""}${
+    e.params && "additionalProperty" in e.params ? ` (${String(e.params.additionalProperty)})` : ""
+  }`;
+
 export function validateSchema(set: CitationSet): SchemaError[] {
   if (!compiled) return [];
   const ok = compiled(set);
   if (ok || !compiled.errors) return [];
-  // oneOf produces a flood of sub-errors; keep the most specific ones and dedupe.
   const seen = new Set<string>();
   const out: SchemaError[] = [];
-  for (const e of compiled.errors) {
-    if (e.keyword === "oneOf" || e.keyword === "const") continue;
-    const message = `${e.instancePath || "/"} ${e.message ?? ""}${
-      e.params && "additionalProperty" in e.params ? ` (${String(e.params.additionalProperty)})` : ""
-    }`;
-    if (seen.has(message)) continue;
+  const push = (instancePath: string, message: string, e: ErrorObject) => {
+    if (seen.has(message)) return;
     seen.add(message);
-    out.push({ instancePath: e.instancePath, message, ...locateError(e, set) });
+    out.push({ instancePath, message, ...locateError({ ...e, instancePath }, set) });
+  };
+
+  // Errors inside an anchor come from every oneOf branch. When the anchor declares a known
+  // kind, re-validate it against just that branch and report those errors instead.
+  const handledAnchors = new Set<string>();
+  for (const e of compiled.errors) {
+    const m = e.instancePath.match(/^(\/citations\/([^/]+)\/(\d+)\/anchors\/(\d+))(\/|$)/);
+    if (m) {
+      const anchorPath = m[1];
+      if (handledAnchors.has(anchorPath)) continue;
+      const pointer = m[2].replace(/~1/g, "/").replace(/~0/g, "~");
+      const anchor = set.citations[pointer]?.[Number(m[3])]?.anchors?.[Number(m[4])] as { kind?: unknown } | undefined;
+      const v = typeof anchor?.kind === "string" ? anchorValidators.get(anchor.kind) : undefined;
+      if (v) {
+        handledAnchors.add(anchorPath);
+        if (!v(anchor) && v.errors) {
+          for (const ae of v.errors) {
+            if (ae.keyword === "const") continue;
+            push(anchorPath + ae.instancePath, formatMessage(ae, anchorPath + ae.instancePath), ae);
+          }
+        }
+        continue;
+      }
+      if (e.keyword === "const") continue; // unknown kind → keep branch errors so the user sees why nothing matched
+    }
+    if (e.keyword === "oneOf") continue;
+    push(e.instancePath, formatMessage(e), e);
   }
   if (out.length === 0 && compiled.errors.length) {
     const e = compiled.errors[0];
@@ -181,6 +225,8 @@ async function checkPageRegion(
     } else {
       findings.push({ level: "ok", code: "quote-verified", message: `OCR text under box equals quote`, anchorIndex: i });
     }
+  } else if (text !== undefined) {
+    findings.push({ level: "ok", code: "ocr-resolves", message: `OCR words under box: ${JSON.stringify(trunc(text))}`, anchorIndex: i });
   } else if (findings.length === 0) {
     findings.push({ level: "info", code: "visual-only", message: `no OCR provenance; box must be checked visually`, anchorIndex: i });
   }

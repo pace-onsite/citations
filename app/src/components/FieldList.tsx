@@ -40,7 +40,7 @@ export function FieldList({ fields, set, reports, selectedPointer, onSelect }: P
   useEffect(() => {
     if (!selectedPointer) return;
     const el = listRef.current?.querySelector<HTMLElement>(`[data-ptr="${CSS.escape(selectedPointer)}"]`);
-    el?.scrollIntoView({ block: "nearest" });
+    el?.scrollIntoView({ block: "center" });
   }, [selectedPointer]);
 
   return (

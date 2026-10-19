@@ -102,6 +102,7 @@ export function PdfViewer({ caseId, file, page, onPage, anchors, activeIndex, gh
   if (err) return <div className="viewer-empty error">Could not open {file}: {err}</div>;
 
   const numPages = doc?.numPages ?? 0;
+  const shownPage = numPages ? Math.min(page, numPages) : page;
   const onPageBoxes = anchors.filter((a) => a.anchor.page === page);
   const ghostBoxes = showGhosts ? ghosts.filter((g) => g.page === page) : [];
 
@@ -114,7 +115,7 @@ export function PdfViewer({ caseId, file, page, onPage, anchors, activeIndex, gh
             type="number"
             min={1}
             max={numPages || 1}
-            value={page}
+            value={shownPage}
             onChange={(e) => onPage(Math.min(Math.max(1, Number(e.target.value) || 1), numPages || 1))}
           />
           <span>/ {numPages || "…"}</span>
